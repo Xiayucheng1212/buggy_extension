@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import x_button from "../imgs/x-mark.png";
 import Tag from "./Tag";
 import SelectedTag from "./SelectedTag";
@@ -6,6 +6,12 @@ import SelectedTag from "./SelectedTag";
 const FormTagItem = (props) => {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectTags] = useState([]);
+
+  useEffect(() => {
+    console.log(selectedTags);
+    props.register('tags', { value: selectedTags })
+    props.setValue('tags', selectedTags);
+}, [props.setValue, props.register, selectedTags]);
 
   const handleTagClick = (name) => {
     if (selectedTags.find((tag) => tag === name)) return;
@@ -22,6 +28,7 @@ const FormTagItem = (props) => {
 
   const handleAddNewTag = (e) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       const newTag = e.target.value;
       if (tags.find((tag) => tag === newTag)) return;
       setTags([...tags, newTag]);
