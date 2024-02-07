@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import x_button from "../imgs/x-mark.png";
 import Tag from "./Tag";
 import SelectedTag from "./SelectedTag";
@@ -8,7 +9,12 @@ const FormTagItem = (props) => {
   const [selectedTags, setSelectTags] = useState([]);
 
   useEffect(() => {
-    console.log(selectedTags);
+    axios.get("http://localhost:3001/tag/all/name").then((response) => {
+      setTags(response.data.map((tag) => tag.name));
+    });
+  }, []);
+
+  useEffect(() => {
     props.register('tags', { value: selectedTags })
     props.setValue('tags', selectedTags);
 }, [props.setValue, props.register, selectedTags]);
@@ -29,11 +35,15 @@ const FormTagItem = (props) => {
   const handleAddNewTag = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      const newTag = e.target.value;
+      const newTag = e.target.value.trim();
       if (tags.find((tag) => tag === newTag)) return;
-      setTags([...tags, newTag]);
-      e.target.value = "";
-      setSelectTags([...selectedTags, newTag]);
+
+      axios.post("http://localhost:3001/tag/add", { name: newTag })
+        .then((response) => {
+          setTags([...tags, newTag]);
+          setSelectTags([...selectedTags, newTag]);
+          e.target.value = "";
+        });
     }
   };
 

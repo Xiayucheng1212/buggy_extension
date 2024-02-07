@@ -1,4 +1,4 @@
-
+import axios from 'axios';
 import React from 'react';
 import { useForm } from "react-hook-form";
 import FormItem from './FormItem';
@@ -10,6 +10,13 @@ export default function Form() {
     const { register, handleSubmit, setValue } = useForm();
     const onSubmit = (data) => {
         console.log(data);
+        axios.post('http://localhost:3001/link/add', data)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return (

@@ -1,10 +1,15 @@
-
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import toggle_icon from '../imgs/right-arrow.png';
 import LinkItem from './LinkItem';
 
 const TagItem = (props) => {
     const [toggle, setToggle] = useState(false);
+    const [links, setLinks] = useState(props.links);
+
+    useEffect(() => {
+        if (links.length === 0) setToggle(false);
+    },[links]);
 
     const handleClick = () => {
         setToggle(!toggle);
@@ -17,12 +22,13 @@ const TagItem = (props) => {
                 <div>
                     <img className="w-[15px] h-[15px]" src={toggle_icon} alt='erase_button' style={{ transform: rotation, transition: 'transform 0.2s' }} />
                 </div>
-                <div className="grow shrink basis-0 h-[29px] select-none text-neutral-600 text-xl font-medium font-['Jost']">{props.tag}</div>
+                <div className="grow shrink basis-0 h-[29px] select-none text-neutral-600 text-xl font-medium font-['Jost']">{props.name}</div>
             </div>
             {toggle && 
                 <>
-                    <LinkItem />
-                    <LinkItem />
+                    {links.map((link, i) => (
+                        <LinkItem key={i} id={link._id} name={link.name} url={link.url} setLinks={setLinks}/>
+                    ))}
                 </>
             }
         </>
