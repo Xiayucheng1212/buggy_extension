@@ -7,7 +7,7 @@ import CopyToClipboardButton from "./CopyToClipboardButton";
 const LinkItem = (props) => {
   function handleClick() {
     console.log(props.id)
-    axios.delete("http://localhost:3001/link/delete/" + props.id)
+    axios.delete(process.env.REACT_APP_SERVER_PROD + "/link/delete/" + props.id)
       .then((response) => {
         console.log(response);
         props.setLinks((prev) => {

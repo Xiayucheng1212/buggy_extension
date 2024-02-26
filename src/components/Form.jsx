@@ -10,7 +10,7 @@ export default function Form() {
     const { register, handleSubmit, setValue } = useForm();
     const onSubmit = (data) => {
         console.log(data);
-        axios.post('http://localhost:3001/link/add', data)
+        axios.post(process.env.REACT_APP_SERVER_PROD + '/link/add', data)
             .then((response) => {
                 console.log(response);
             })

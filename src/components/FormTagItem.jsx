@@ -9,7 +9,7 @@ const FormTagItem = (props) => {
   const [selectedTags, setSelectTags] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/tag/all/name").then((response) => {
+    axios.get(process.env.REACT_APP_SERVER_PROD + "/tag/all/name").then((response) => {
       setTags(response.data.map((tag) => tag.name));
     });
   }, []);
@@ -38,7 +38,7 @@ const FormTagItem = (props) => {
       const newTag = e.target.value.trim();
       if (tags.find((tag) => tag === newTag)) return;
 
-      axios.post("http://localhost:3001/tag/add", { name: newTag })
+      axios.post(process.env.REACT_APP_SERVER_PROD + "/tag/add", { name: newTag })
         .then((response) => {
           setTags([...tags, newTag]);
           setSelectTags([...selectedTags, newTag]);

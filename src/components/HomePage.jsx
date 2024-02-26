@@ -11,7 +11,7 @@ const HomePage = () => {
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/tag/all")
+    axios.get(process.env.REACT_APP_SERVER_PROD +"/tag/all")
         .then((response) => {
             setTags(response.data);
         })
