@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import x_button from "../imgs/x-mark.png";
 import Tag from "./Tag";
 import SelectedTag from "./SelectedTag";
+import TagController from "../controller/TagController";
+import DBContext from "../DBContext";
 
 const FormTagItem = (props) => {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectTags] = useState([]);
+  const dbProm = useContext(DBContext).dbProm;
+
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_SERVER_PROD + "/tag/all/name").then((response) => {
-      setTags(response.data.map((tag) => tag.name));
+    dbProm.then((db) => {
+      const tagController = new TagController(db);
+      tagController.getAll().then((tags) => {
+        setTags(tags.map((tag) => tag.name));
+      });
     });
   }, []);
 
@@ -38,12 +45,14 @@ const FormTagItem = (props) => {
       const newTag = e.target.value.trim();
       if (tags.find((tag) => tag === newTag)) return;
 
-      axios.post(process.env.REACT_APP_SERVER_PROD + "/tag/add", { name: newTag })
-        .then((response) => {
+      dbProm.then((db) => {
+        const tagController = new TagController(db);
+        tagController.addTag(newTag).then((tag) => {
           setTags([...tags, newTag]);
           setSelectTags([...selectedTags, newTag]);
           e.target.value = "";
         });
+      });
     }
   };
 

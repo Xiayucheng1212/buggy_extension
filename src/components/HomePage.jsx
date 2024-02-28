@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import axios from 'axios';
 import draft_logo from '../imgs/draft.png';
 import add_logo from '../imgs/add_icon.png';
@@ -6,15 +6,20 @@ import Button from './Button';
 import SearchBar from './SearchBar';
 import TagItem from './TagItem';
 import { Link } from 'react-router-dom';
+import DBContext from '../DBContext';
+import TagController from '../controller/TagController';
 
 const HomePage = () => {
   const [tags, setTags] = useState([]);
+  const dbProm = useContext(DBContext).dbProm;
 
   useEffect(() => {
-    axios.get(process.env.REACT_APP_SERVER_PROD +"/tag/all")
-        .then((response) => {
-            setTags(response.data);
-        })
+    dbProm.then((db) => {
+      const tagController = new TagController(db);
+      tagController.getAllLinksByTags().then((tags) => {
+        setTags(tags);
+      });
+    });
   },[]);
 
   return (

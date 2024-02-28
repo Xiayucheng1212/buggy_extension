@@ -3,20 +3,24 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import FormItem from './FormItem';
 import FormTagItem from './FormTagItem';
+import { useContext } from 'react';
+import DBContext from '../DBContext';
+import LinkController from '../controller/LinkController';
 
 
 export default function Form() {
 
     const { register, handleSubmit, setValue } = useForm();
+    const dbProm = useContext(DBContext).dbProm;
+
     const onSubmit = (data) => {
         console.log(data);
-        axios.post(process.env.REACT_APP_SERVER_PROD + '/link/add', data)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
+        dbProm.then((db) => {
+            const linkController = new LinkController(db);
+            linkController.addLink(data).then((link) => {
+                console.log("added");
             });
+        });
     }
 
     return (

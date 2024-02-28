@@ -1,17 +1,43 @@
 import './App.css';
+import { openDB } from 'idb';
 import HomePage from './components/HomePage';
 import AddPage from './components/AddPage';
 import { Routes, Route } from 'react-router-dom'
 import DraftPage from './components/DraftPage';
+import DBContext from './DBContext';
 
 function App() {
+  var dbProm = openDB('buggy', 1, {
+    upgrade(db) {
+      db.createObjectStore('links', {
+        keyPath: 'id',
+        name: 'string',
+        url: 'string',
+        description: 'string',
+        tags: 'array',
+        autoIncrement: true
+      });
+      db.createObjectStore('tags', {
+        keyPath: 'id',
+        links: 'array',
+        autoIncrement: true
+      });
+      db.createObjectStore('drafts', {
+        keyPath: 'id',
+        autoIncrement: true
+      });
+    }
+  })
+
   return (
     <>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/add" element={<AddPage />} />
-        <Route path="/draft" element={<DraftPage />} />
-      </Routes>
+      <DBContext.Provider value={{ dbProm: dbProm }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/add" element={<AddPage />} />
+          <Route path="/draft" element={<DraftPage />} />
+        </Routes>
+      </DBContext.Provider>
     </>
   );
 }
