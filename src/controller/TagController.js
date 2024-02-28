@@ -3,6 +3,17 @@ var TagController = function (db) {
     this.collection_name = "tags";
 }
 
+TagController.prototype.deleteLinkFromTag = function (tag_ids, link_id) {
+    return this.db.transaction('tags', 'readwrite').objectStore('tags').getAll().then((tags) => {
+        tags.forEach((tag) => {
+            if (tag_ids.includes(tag.id)) {
+                tag.links = tag.links.filter((link) => link !== link_id);
+                this.db.transaction('tags', 'readwrite').objectStore('tags').put(tag);
+            }
+        });
+    });
+}
+
 TagController.prototype.getAll = function () {
     return this.db.transaction('tags').objectStore('tags').getAll().then((tags) => {
         return tags;

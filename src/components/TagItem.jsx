@@ -27,7 +27,7 @@ const TagItem = (props) => {
             {toggle && 
                 <>
                     {links.map((link, i) => (
-                        <LinkItem key={i} id={link._id} name={link.name} url={link.url} setLinks={setLinks}/>
+                        <LinkItem key={i} id={link.id} name={link.name} url={link.url} setLinks={setLinks}/>
                     ))}
                 </>
             }

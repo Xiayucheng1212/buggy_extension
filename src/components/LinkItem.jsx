@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "axios";
 import delete_logo from "../imgs/delete.png";
 import { Link } from "react-router-dom";
 import CopyToClipboardButton from "./CopyToClipboardButton";
+import DBContext from "../DBContext";
+import LinkController from "../controller/LinkController";
 
 const LinkItem = (props) => {
+  const dbProm = useContext(DBContext).dbProm;
+
   function handleClick() {
-    console.log(props.id)
-    axios.delete(process.env.REACT_APP_SERVER_PROD + "/link/delete/" + props.id)
-      .then((response) => {
-        console.log(response);
+    dbProm.then((db) => {
+      const linkController = new LinkController(db);
+      linkController.delete(props.id).then(() => {
+        console.log("deleted");
         props.setLinks((prev) => {
-          return prev.filter((link, i) => link._id !== props.id);
+          return prev.filter((link, i) => link.id !== props.id);
         });
       });
+    })
+    
   }
 
   return (

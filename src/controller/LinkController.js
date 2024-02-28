@@ -5,6 +5,17 @@ var LinkController = function (db) {
     this.collection_name = "links";
 }
 
+LinkController.prototype.delete = async function (link_id) {
+    // find all tags under this link and delete this link from the tags
+    var tagController = new TagController(this.db);
+    this.db.transaction('links').objectStore('links').get(link_id).then(async (link) => {
+        await tagController.deleteLinkFromTag(link.tags, link_id);
+        await this.db.transaction('links', 'readwrite').objectStore('links').delete(link_id);
+    });
+
+    return true;
+}
+
 LinkController.prototype.getAll = function () {
     return this.db.transaction('links').objectStore('links').getAll().then((links) => {
         return links;

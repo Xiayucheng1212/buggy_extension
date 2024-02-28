@@ -18,6 +18,7 @@ const HomePage = () => {
       const tagController = new TagController(db);
       tagController.getAllLinksByTags().then((tags) => {
         setTags(tags);
+        console.log(tags);
       });
     });
   },[]);
