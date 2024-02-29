@@ -13,7 +13,8 @@ const HomePage = () => {
   useEffect(() => {
     axios.get(process.env.REACT_APP_SERVER_PROD +"/tag/all")
         .then((response) => {
-            setTags(response.data);
+            var tags = response.data.filter((tag) => tag.links.length > 0);
+            setTags(tags);
         })
   },[]);
 
