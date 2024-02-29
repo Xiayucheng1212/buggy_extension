@@ -19,6 +19,8 @@ export default function Form() {
             const linkController = new LinkController(db);
             linkController.addLink(data).then((link) => {
                 console.log("added");
+                // jump back to home page
+                window.location.href = "/";
             });
         });
     }
