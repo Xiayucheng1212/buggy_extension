@@ -17,6 +17,8 @@ const HomePage = () => {
     dbProm.then((db) => {
       const tagController = new TagController(db);
       tagController.getAllLinksByTags().then((tags) => {
+        // filter out tags with no links
+        tags = tags.filter((tag) => tag.links.length > 0);
         setTags(tags);
         console.log(tags);
       });

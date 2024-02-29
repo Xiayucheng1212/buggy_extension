@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import axios from "axios";
 import delete_logo from "../imgs/delete.png";
 import { Link } from "react-router-dom";
 import CopyToClipboardButton from "./CopyToClipboardButton";
@@ -17,6 +16,7 @@ const LinkItem = (props) => {
         props.setLinks((prev) => {
           return prev.filter((link, i) => link.id !== props.id);
         });
+        window.location.href = "/";
       });
     })
     

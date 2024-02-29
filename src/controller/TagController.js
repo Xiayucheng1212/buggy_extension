@@ -5,10 +5,14 @@ var TagController = function (db) {
 
 TagController.prototype.deleteLinkFromTag = function (tag_ids, link_id) {
     return this.db.transaction('tags', 'readwrite').objectStore('tags').getAll().then((tags) => {
-        tags.forEach((tag) => {
+        tags.forEach(async (tag) => {
             if (tag_ids.includes(tag.id)) {
                 tag.links = tag.links.filter((link) => link !== link_id);
-                this.db.transaction('tags', 'readwrite').objectStore('tags').put(tag);
+                await this.db.transaction('tags', 'readwrite').objectStore('tags').put(tag);
+
+                if (tag.links.length === 0) {
+                    await this.db.transaction('tags', 'readwrite').objectStore('tags').delete(tag.id);
+                }
             }
         });
     });
