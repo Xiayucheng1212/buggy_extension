@@ -13,12 +13,14 @@ const FormTagItem = (props) => {
 
 
   useEffect(() => {
-    dbProm.then((db) => {
-      const tagController = new TagController(db);
-      tagController.getAll().then((tags) => {
-        setTags(tags.map((tag) => tag.name));
+    if (process.env.REACT_APP_VER === "LOCAL") {
+      dbProm.then((db) => {
+        const tagController = new TagController(db);
+        tagController.getAll().then((tags) => {
+          setTags(tags.map((tag) => tag.name));
+        });
       });
-    });
+    }
   }, []);
 
   useEffect(() => {

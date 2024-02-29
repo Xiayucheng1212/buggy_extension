@@ -9,17 +9,18 @@ const LinkItem = (props) => {
   const dbProm = useContext(DBContext).dbProm;
 
   function handleClick() {
-    dbProm.then((db) => {
-      const linkController = new LinkController(db);
-      linkController.delete(props.id).then(() => {
-        console.log("deleted");
-        props.setLinks((prev) => {
-          return prev.filter((link, i) => link.id !== props.id);
+    if (process.env.REACT_APP_VER === "LOCAL") {
+      dbProm.then((db) => {
+        const linkController = new LinkController(db);
+        linkController.delete(props.id).then(() => {
+          console.log("deleted");
+          props.setLinks((prev) => {
+            return prev.filter((link, i) => link.id !== props.id);
+          });
+          window.location.href = "/";
         });
-        window.location.href = "/";
-      });
-    })
-    
+      })
+    }
   }
 
   return (

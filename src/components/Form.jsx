@@ -14,14 +14,16 @@ export default function Form() {
 
     const onSubmit = (data) => {
         console.log(data);
-        dbProm.then((db) => {
-            const linkController = new LinkController(db);
-            linkController.addLink(data).then((link) => {
-                console.log("added");
-                // jump back to home page
-                window.location.href = "/";
+        if (process.env.REACT_APP_VER === "LOCAL") {
+            dbProm.then((db) => {
+                const linkController = new LinkController(db);
+                linkController.addLink(data).then((link) => {
+                    console.log("added");
+                    // jump back to home page
+                    window.location.href = "/";
+                });
             });
-        });
+        }
     }
 
     return (
