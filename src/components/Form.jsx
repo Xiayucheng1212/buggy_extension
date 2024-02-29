@@ -22,7 +22,7 @@ export default function Form() {
     return (
         <div className="h-auto overflow-y-scroll">
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='w-[100%] h-[100%] flex-col justify-start items-center inline-flex gap-[18px]'>
+                <div className='w-[290px] h-[100%] flex-col justify-start items-center inline-flex gap-[18px]'>
                     <FormItem name="url" label="URL" register={register} />
                     <FormItem name="name" label="Name" register={register} />
                     <FormItem name="description" label="Description" register={register} />

@@ -53,17 +53,19 @@ const FormTagItem = (props) => {
         {props.label}
       </div>
       <div className="self-stretch h-[30px] pl-[10px] pr-2.5 py-[5px] bg-zinc-300 rounded-t-[5px] flex space-x items-center">
-        {selectedTags.length === 0 ? (
-          <input
-            className="bg-transparent resize-none text-neutral-600 text-xs font-medium font-['Jost']"
-            disabled
-            placeholder="Click to select"
-          />
-        ) : (
-          selectedTags.map((tag, i) => (
-            <SelectedTag key={i} name={tag} onClick={handleClearOne} />
-          ))
-        )}
+        <div className="w-[230px] h-[24px] flex mr-[10px] bg-transparent bg-zinc-300 justify-start items-center gap-x-2 overflow-x-scroll">
+          {selectedTags.length === 0 ? (
+            <input
+              className="bg-transparent resize-none text-neutral-600 text-xs font-medium font-['Jost']"
+              disabled
+              placeholder="Click to select"
+            />
+          ) : (
+            selectedTags.map((tag, i) => (
+              <SelectedTag key={i} name={tag} onClick={handleClearOne} />
+            ))
+          )}
+        </div>
         <div className="w-3 h-3" onClick={handleClearAll}>
           <img
             className="w-3 h-3 justify-center items-center"
