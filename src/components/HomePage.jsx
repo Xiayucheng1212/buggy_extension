@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useContext} from 'react';
-import axios from 'axios';
 import draft_logo from '../imgs/draft.png';
 import add_logo from '../imgs/add_icon.png';
 import Button from './Button';

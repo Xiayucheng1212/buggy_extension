@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import axios from "axios";
 import x_button from "../imgs/x-mark.png";
 import Tag from "./Tag";
 import SelectedTag from "./SelectedTag";

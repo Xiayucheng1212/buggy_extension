@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import toggle_icon from '../imgs/right-arrow.png';
 import LinkItem from './LinkItem';
