@@ -55,7 +55,6 @@ TagController.prototype.getAllLinksByTags = function () {
 
             new_tags.push(new_tag);
         });
-        console.log(new_tags)
         return new_tags;
     });
 

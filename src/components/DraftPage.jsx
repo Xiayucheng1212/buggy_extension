@@ -1,4 +1,5 @@
-import React from 'react';
+ /*global chrome*/
+import React, { useEffect } from 'react';
 import SearchBar from './SearchBar';
 import Button from './Button';
 import stack_logo from '../imgs/stack_icon.png';
@@ -10,11 +11,12 @@ import EmptyInformation from './EmptyInformation';
 
 
 export default function DraftPage() {
-    const drafts = []
-    // const drafts = [{
-    //     title: "modulenotfound",
-    //     url: "https://winston.com"
-    // }]
+    const drafts = [{
+        id: 0,
+        name: "modulenotfound",
+        url: "https://winston.com",
+        description: "This is a description"
+    }]
     return (
         <>
             <div className="w-[350px] h-[500px] px-[30px] pt-[30px] pb-[106px] bg-white flex-col justify-start items-center gap-1.5 inline-flex">
@@ -26,7 +28,7 @@ export default function DraftPage() {
                 {drafts.length === 0 ? 
                     <EmptyInformation information={"No Drafts."} /> : 
                     drafts.map((draft, i) => 
-                        <DraftItem key={i} title={draft.title} url={draft.url}/>
+                        <DraftItem key={i} name={draft.name} url={draft.url} id={draft.id}/>
                     )
                 }
             </div>

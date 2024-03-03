@@ -2,6 +2,7 @@ import './App.css';
 import { openDB } from 'idb';
 import HomePage from './components/HomePage';
 import AddPage from './components/AddPage';
+import EditPage from './components/EditPage';
 import { Routes, Route } from 'react-router-dom'
 import DraftPage from './components/DraftPage';
 import DBContext from './DBContext';
@@ -24,6 +25,9 @@ function App() {
       });
       db.createObjectStore('drafts', {
         keyPath: 'id',
+        name: 'string',
+        url: 'string',
+        description: 'string',
         autoIncrement: true
       });
     }
@@ -36,6 +40,7 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/add" element={<AddPage />} />
           <Route path="/draft" element={<DraftPage />} />
+          <Route path="/edit/:id" element={<EditPage/>} />
         </Routes>
       </DBContext.Provider>
     </>

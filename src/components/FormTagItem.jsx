@@ -39,10 +39,18 @@ const FormTagItem = (props) => {
   };
 
   const handleAddNewTag = (e) => {
+    function isEmptyString(str){
+      return str === null || str === '';
+    }
+
+    function removeSpace(str) {
+      return str.replace(/\s+/g, '');
+    }
+
     if (e.key === "Enter") {
       e.preventDefault();
-      const newTag = e.target.value.trim();
-      if (tags.find((tag) => tag === newTag)) return;
+      const newTag = removeSpace(e.target.value.trim());
+      if (isEmptyString(newTag) || tags.find((tag) => tag === newTag)) return;
 
       dbProm.then((db) => {
         const tagController = new TagController(db);
