@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import draft_logo from '../imgs/draft.png';
 import add_logo from '../imgs/add_icon.png';
 import Button from './Button';
@@ -13,18 +13,13 @@ const HomePage = () => {
   const dbProm = useContext(DBContext).dbProm;
 
   useEffect(() => {
-    if (process.env.REACT_APP_VER === "LOCAL") {
-      dbProm.then((db) => {
-        const tagController = new TagController(db);
-        tagController.getAllLinksByTags().then((tags) => {
-          // filter out tags with no links
-          tags = tags.filter((tag) => tag.links.length > 0);
-          setTags(tags);
-          console.log(tags);
-        });
+    dbProm.then((db) => {
+      const tagController = new TagController(db);
+      tagController.getAllLinksByTags().then((tags) => {
+        setTags(tags);
       });
-    }
-  },[]);
+    });
+  }, []);
 
   return (
     <div className="w-[350px] h-[500px] px-[30px] pt-[30px] pb-10 bg-white flex-col justify-start items-start gap-1.5 inline-flex">

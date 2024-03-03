@@ -33,7 +33,7 @@ function App() {
     <>
       <DBContext.Provider value={{ dbProm: dbProm }}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route index element={<HomePage />} />
           <Route path="/add" element={<AddPage />} />
           <Route path="/draft" element={<DraftPage />} />
         </Routes>

@@ -14,25 +14,23 @@ export default function Form() {
 
     const onSubmit = (data) => {
         console.log(data);
-        if (process.env.REACT_APP_VER === "LOCAL") {
-            dbProm.then((db) => {
-                const linkController = new LinkController(db);
-                linkController.addLink(data).then((link) => {
-                    console.log("added");
-                    // jump back to home page
-                    window.location.href = "/";
-                });
+        dbProm.then((db) => {
+            const linkController = new LinkController(db);
+            linkController.addLink(data).then((link) => {
+                console.log("added");
+                // jump back to home page
+                window.location.href = "#/";
             });
-        }
+        });
     }
 
     return (
         <div className="h-auto overflow-y-scroll">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='w-[100%] h-[100%] flex-col justify-start items-center inline-flex gap-[18px]'>
-                    <FormItem name="url" label="URL" register={register} />
-                    <FormItem name="name" label="Name" register={register} />
-                    <FormItem name="description" label="Description" register={register} />
+                    <FormItem name="url" label="URL" register={register} setValue={setValue}/>
+                    <FormItem name="name" label="Name" register={register} setValue={setValue} />
+                    <FormItem name="description" label="Description" register={register} setValue={setValue} />
                     <FormTagItem name="tags" label="Tags" register={register} setValue={setValue} />
                     {/* Add Button */}
                     <div className="w-[100px] px-[17px] py-2 hover:bg-red-600 bg-red-400 rounded-[5px] justify-center items-center gap-2.5 inline-flex">

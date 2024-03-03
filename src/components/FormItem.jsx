@@ -2,7 +2,10 @@ import React from 'react';
 import x_button from '../imgs/x-mark.png';
 
 export default function FormItem(props) {
-
+    
+    function handleClear() {
+        props.setValue(props.name, '')
+    }
 
     return (
         <>
@@ -11,7 +14,7 @@ export default function FormItem(props) {
                 <div className="self-stretch h-[30px] pl-[10px] pr-2.5 py-[5px] bg-zinc-300 rounded-[5px] justify-end items-center inline-flex">
                     <input className="w-full mr-[10px] bg-transparent resize-none text-neutral-600 text-xs font-medium font-['Jost']" 
                             {...props.register(props.name)} />
-                    <img className="w-3 h-3 relative flex-col justify-center items-center" src={x_button} alt="erase"/>
+                    <img className="w-3 h-3 relative flex-col justify-center items-center" onClick={handleClear} src={x_button} alt="erase"/>
                 </div>
             </div>
         </>
