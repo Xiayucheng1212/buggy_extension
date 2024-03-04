@@ -1,8 +1,20 @@
-import { LinkController } from './LinkController.js';
+import LinkController from './LinkController.js';
 
 var DraftController = function (db) {
     this.db = db;
     this.collection_name = "drafts";
+}
+
+DraftController.prototype.delete = function(id) {
+    return this.db.transaction('drafts', 'readwrite').objectStore('drafts').delete(id).then((data) => {
+        return data;
+    });
+}
+
+DraftController.prototype.get = function(id) {
+    return this.db.transaction('drafts').objectStore('drafts').get(id).then((draft) => {
+        return draft;
+    });
 }
 
 DraftController.prototype.getAll = function () {
@@ -18,13 +30,6 @@ DraftController.prototype.addDraft = function (draft) {
         description: draft.description
     }).then((draft) => {
         return draft;
-    });
-}
-
-DraftController.prototype.addToLinks = function (draft_id) {
-    return this.db.transaction('drafts').objectStore('drafts').get(draft_id).then((draft) => {
-        var linkController = new LinkController(this.db);
-        linkController.addLink(draft);
     });
 }
 

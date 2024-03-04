@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from "react-hook-form";
 import FormItem from './FormItem';
 import FormTagItem from './FormTagItem';
@@ -7,7 +7,7 @@ import DBContext from '../DBContext';
 import LinkController from '../controller/LinkController';
 
 
-export default function Form() {
+export default function Form(props) {
 
     const { register, handleSubmit, setValue } = useForm();
     const dbProm = useContext(DBContext).dbProm;
@@ -21,8 +21,17 @@ export default function Form() {
                 // jump back to home page
                 window.location.href = "#/";
             });
+
+            if (props.handleDeleteDraft !== undefined) {
+                props.handleDeleteDraft(props.draft_id);
+            }    
         });
     }
+
+    useEffect(() => {
+        // TODO: Bring value to this form if available
+
+    });
 
     return (
         <div className="h-auto overflow-y-scroll">

@@ -1,21 +1,42 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import draft_logo from '../imgs/draft.png';
 import stack_logo from '../imgs/stack_icon.png';
 import Button from './Button';
 import SearchBar from './SearchBar';
 import Form from './Form';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import DBContext from '../DBContext';
+import DraftController from '../controller/DraftController';
 
-const EditPage = () => {
-    const [draft, setDraft] = useState({
+const EditPage = (props) => {
+  var draftController = useRef(null);
+  const dbProm = useContext(DBContext).dbProm;
+  const { id } = useParams();
+  const [draft, setDraft] = useState({
         id: 0,
         name: "modulenotfound",
         url: "https://winston.com",
         description: "This is a description"
     });
 
-    console.log(draft)
+    useEffect(() => {
+        dbProm.then((db) => {
+            draftController.current = new DraftController(db);
+            console.log(id);
+            draftController.current.get(id).then((draft) => {
+                // setDraft(draft);
+                console.log(draft);
+            });
+        });
+    }, []);
+
+    function handleDeleteDraft(id) {
+        draftController.current.delete(id).then(() => {
+            console.log("deleted");
+            window.location.href = "#/draft";
+        });
+    }
 
     return (
         <>
@@ -26,8 +47,7 @@ const EditPage = () => {
                     <Link to="/draft"><Button logo={draft_logo} /></Link>
                 </div>
                 <div className="w-full h-10 flex-col justify-start items-start inline-flex font-bold">Push Draft To Stack</div>
-                {/* TODO: bring value to edit form */}
-                <Form />
+                <Form draft_id={draft.id} url={draft.url} name={draft.name} description={draft.description} handleDeleteDraft={handleDeleteDraft}/>
             </div>
         </>
     );
