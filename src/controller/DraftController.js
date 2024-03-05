@@ -1,5 +1,3 @@
-import LinkController from './LinkController.js';
-
 var DraftController = function (db) {
     this.db = db;
     this.collection_name = "drafts";

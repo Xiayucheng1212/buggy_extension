@@ -1,5 +1,5 @@
  /*global chrome*/
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import Button from './Button';
 import stack_logo from '../imgs/stack_icon.png';
@@ -8,20 +8,29 @@ import add_logo from '../imgs/add_icon.png';
 import { Link } from 'react-router-dom';
 import DraftItem from './DraftItem';
 import EmptyInformation from './EmptyInformation';
-
+import DBContext from '../DBContext';
 
 export default function DraftPage() {
-    var [drafts, setDrafts] = React.useState([{
-        id: 0,
-        name: "modulenotfound",
-        url: "https://winston.com",
-        description: "This is a description"
-    }]);
+    const dbProm = useContext(DBContext).dbProm;
+    var [drafts, setDrafts] = React.useState([]);
 
     function handleDelete(id) {
         var newDrafts = drafts.filter(draft => draft.id !== id);
-        setDrafts(newDrafts);
-    }
+        dbProm.then((db) => {
+            db.transaction('drafts', 'readwrite').objectStore('drafts').delete(id).then(() => {
+                console.log("deleted");
+                setDrafts(newDrafts);
+            });
+        });
+    }     
+
+    useEffect(() => {
+        dbProm.then((db) => {
+            db.transaction('drafts').objectStore('drafts').getAll().then((drafts) => {
+                setDrafts(drafts);
+            });
+        });
+    }, []);
 
     return (
         <>

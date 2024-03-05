@@ -14,23 +14,23 @@ export default function Form(props) {
 
     const onSubmit = (data) => {
         console.log(data);
-        dbProm.then((db) => {
+        dbProm.then(async (db) => {
             const linkController = new LinkController(db);
-            linkController.addLink(data).then((link) => {
-                console.log("added");
-                // jump back to home page
-                window.location.href = "#/";
-            });
-
+            await linkController.addLink(data)
+            console.log("added");
             if (props.handleDeleteDraft !== undefined) {
                 props.handleDeleteDraft(props.draft_id);
+                return;
             }    
+            // jump back to home page
+            window.location.href = "#/";
         });
     }
 
     useEffect(() => {
-        // TODO: Bring value to this form if available
-
+        if (props.url !== undefined) setValue('url', props.url);
+        if (props.name !== undefined) setValue('name', props.name);
+        if (props.description !== undefined) setValue('description', props.description);
     });
 
     return (

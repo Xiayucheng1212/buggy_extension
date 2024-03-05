@@ -24,9 +24,9 @@ const EditPage = (props) => {
         dbProm.then((db) => {
             draftController.current = new DraftController(db);
             console.log(id);
-            draftController.current.get(id).then((draft) => {
-                // setDraft(draft);
-                console.log(draft);
+            draftController.current.getAll().then((drafts) => {
+                var draft = drafts.find((draft) => draft.id === parseInt(id));
+                setDraft(draft);
             });
         });
     }, []);
@@ -34,7 +34,6 @@ const EditPage = (props) => {
     function handleDeleteDraft(id) {
         draftController.current.delete(id).then(() => {
             console.log("deleted");
-            window.location.href = "#/draft";
         });
     }
 
