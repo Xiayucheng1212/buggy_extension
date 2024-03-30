@@ -1,25 +1,27 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": [
-    {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
-    }
+  "manifest_version": 3,
+  "name": "buggy_full",
+  "version": "1.0",
+  "description": "Description of your extension",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "notifications"
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "commands": {
+    "add-draft": { 
+      "suggested_key": {
+      "default": "Ctrl+Shift+K",
+      "mac": "Command+Shift+K"
+    },
+    "description": "Add current page to draft list"}
+  },
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  }
 }
