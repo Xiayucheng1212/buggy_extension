@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import FormItem from './FormItem';
 import FormTagItem from './FormTagItem';
@@ -11,6 +12,7 @@ export default function Form(props) {
 
     const { register, handleSubmit, setValue } = useForm();
     const dbProm = useContext(DBContext).dbProm;
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         console.log(data);
@@ -20,10 +22,9 @@ export default function Form(props) {
             console.log("added");
             if (props.handleDeleteDraft !== undefined) {
                 props.handleDeleteDraft(props.draft_id);
-                return;
             }    
             // jump back to home page
-            window.location.href = "#/";
+            navigate('/', { replace: true });
         });
     }
 

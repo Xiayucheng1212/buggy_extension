@@ -19,7 +19,6 @@ const LinkItem = (props) => {
         props.setLinks((prev) => {
           return prev.filter((link, i) => link.id !== props.id);
         });
-        window.location.href = "#/";
       });
     })
   }

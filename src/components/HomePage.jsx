@@ -4,7 +4,7 @@ import add_logo from '../imgs/add_icon.png';
 import Button from './Button';
 import SearchBar from './SearchBar';
 import TagItem from './TagItem';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import DBContext from '../DBContext';
 import TagController from '../controller/TagController';
 
