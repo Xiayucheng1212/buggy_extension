@@ -22,7 +22,13 @@ export default function Form(props) {
             console.log("added");
             if (props.handleDeleteDraft !== undefined) {
                 props.handleDeleteDraft(props.draft_id);
-            }    
+            }
+            // update badge count   
+            chrome.action.getBadgeText({}, (badgeText) => {
+                let minus_one = parseInt(badgeText) - 1;
+                let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
+                chrome.action.setBadgeText({ text: minus_one_count });
+            });
             // jump back to home page
             navigate('/', { replace: true });
         });

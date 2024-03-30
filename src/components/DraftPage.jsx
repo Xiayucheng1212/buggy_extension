@@ -22,6 +22,12 @@ export default function DraftPage() {
                 setDrafts(newDrafts);
             });
         });
+        // update badge count
+        chrome.action.getBadgeText({}, (badgeText) => {
+            let minus_one = parseInt(badgeText) - 1;
+            let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
+            chrome.action.setBadgeText({ text: minus_one_count });
+        });
     }     
 
     useEffect(() => {
