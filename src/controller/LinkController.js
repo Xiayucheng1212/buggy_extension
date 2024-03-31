@@ -49,4 +49,17 @@ LinkController.prototype.addLink = function (link) {
 
 }
 
+LinkController.prototype.searchLinksByKeywords = function (keyword) {
+    let new_links = [];
+    keyword = keyword.toLowerCase();
+    return this.db.transaction('links').objectStore('links').getAll().then((links) => {
+        links.forEach((link) => {
+            if (link.name.toLowerCase().includes(keyword) || link.description.toLowerCase().includes(keyword)) {
+                new_links.push(link);
+            }
+        });
+        return new_links;
+    });
+}
+
 export default LinkController;

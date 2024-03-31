@@ -1,4 +1,4 @@
- /*global chrome*/
+/*global chrome*/
 import React, { useContext, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import Button from './Button';
@@ -28,7 +28,7 @@ export default function DraftPage() {
             let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
             chrome.action.setBadgeText({ text: minus_one_count });
         });
-    }     
+    }
 
     useEffect(() => {
         dbProm.then((db) => {
@@ -46,10 +46,10 @@ export default function DraftPage() {
                     <Link to="/add"><Button logo={add_logo} /></Link>
                     <Link to="/"><Button logo={stack_logo} /></Link>
                 </div>
-                {drafts.length === 0 ? 
-                    <EmptyInformation information={"No Drafts."} /> : 
-                    drafts.map((draft, i) => 
-                        <DraftItem key={i} name={draft.name} url={draft.url} id={draft.id} handleDelete={handleDelete}/>
+                {drafts.length === 0 ?
+                    <EmptyInformation information={"No Drafts."} /> :
+                    drafts.map((draft, i) =>
+                        <DraftItem key={i} name={draft.name} url={draft.url} id={draft.id} handleDelete={handleDelete} />
                     )
                 }
             </div>

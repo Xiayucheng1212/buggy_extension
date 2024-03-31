@@ -8,7 +8,7 @@ const TagItem = (props) => {
 
     useEffect(() => {
         if (links.length === 0) setToggle(false);
-    },[links]);
+    }, [links]);
 
     const handleClick = () => {
         setToggle(!toggle);
@@ -23,10 +23,10 @@ const TagItem = (props) => {
                 </div>
                 <div className="grow shrink basis-0 h-[29px] select-none text-neutral-600 text-xl font-medium font-['Jost']">{props.name}</div>
             </div>
-            {toggle && 
+            {toggle &&
                 <>
                     {links.map((link, i) => (
-                        <LinkItem key={i} id={link.id} name={link.name} url={link.url} setLinks={setLinks}/>
+                        <LinkItem key={i} id={link.id} name={link.name} url={link.url} setLinks={setLinks} />
                     ))}
                 </>
             }

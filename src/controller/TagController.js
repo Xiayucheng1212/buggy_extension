@@ -25,7 +25,7 @@ TagController.prototype.getAll = function () {
 }
 
 TagController.prototype.addTag = function (newTag) {
-    return this.db.transaction('tags', "readwrite").objectStore('tags').add({name: newTag, links: []}).then((tag) => {
+    return this.db.transaction('tags', "readwrite").objectStore('tags').add({ name: newTag, links: [] }).then((tag) => {
         return tag;
     });
 }
@@ -45,7 +45,7 @@ TagController.prototype.getAllLinksByTags = function () {
     var new_tags = [];
     return this.db.transaction('tags').objectStore('tags').getAll().then((tags) => {
         tags.forEach((tag) => {
-            var new_tag = {name: tag.name, links: []};
+            var new_tag = { name: tag.name, links: [] };
 
             tag.links.forEach((link) => {
                 this.db.transaction('links').objectStore('links').get(link).then((l) => {
