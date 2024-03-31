@@ -1,3 +1,4 @@
+/* global chrome */
 import React, { useState, useEffect, useContext } from "react";
 import draft_logo from "../imgs/draft.png";
 import add_logo from "../imgs/add_icon.png";
@@ -10,13 +11,25 @@ import TagController from "../controller/TagController";
 import LinkItem from "./LinkItem";
 import LinkController from "../controller/LinkController";
 import EmptyInformation from "./EmptyInformation";
+import DraftCountNotification from "./DraftCountNotification";
+import { set } from "react-hook-form";
 
 const HomePage = () => {
 	const [tags, setTags] = useState([]);
 	const [searching, setSearching] = useState(false);
 	const [keyword, setKeyword] = useState("");
 	const [searchedLinks, setSearchedLinks] = useState([]);
+	const [draftCount, setDraftCount] = useState(0);
 	const dbProm = useContext(DBContext).dbProm;
+
+	useEffect(() => {
+		if(!chrome.action) return;
+		chrome.action.getBadgeText({}, (badgeText) => {
+			console.log(badgeText);
+            let count = parseInt(badgeText) || 0;
+            setDraftCount(count);
+        });
+	}, []);
 
 	useEffect(() => {
 		dbProm.then((db) => {
@@ -55,8 +68,9 @@ const HomePage = () => {
 				<Link to="/add">
 					<Button logo={add_logo} />
 				</Link>
-				<Link to="/draft">
+				<Link className="relative" to="/draft">
 					<Button logo={draft_logo} />
+					<DraftCountNotification draftCount={draftCount} />
 				</Link>
 			</div>
 			{searching
