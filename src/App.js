@@ -1,14 +1,15 @@
 import './App.css';
 import { openDB } from 'idb';
+import { Routes, Route } from 'react-router-dom'
 import HomePage from './components/HomePage';
 import AddPage from './components/AddPage';
 import EditPage from './components/EditPage';
-import { Routes, Route } from 'react-router-dom'
 import DraftPage from './components/DraftPage';
+import Navbar from './components/Navbar';
 import DBContext from './DBContext';
 
-function App() {
-  var dbProm = openDB('buggy', 1, {
+const App = () => {
+  let dbProm = openDB('buggy', 1, {
     upgrade(db) {
       db.createObjectStore('links', {
         keyPath: 'id',
@@ -34,8 +35,9 @@ function App() {
   })
 
   return (
-    <>
+    <div className="w-[350px] h-[500px] px-[30px] pt-[30px] pb-10 bg-white flex-col justify-start items-center gap-1.5 inline-flex">
       <DBContext.Provider value={{ dbProm: dbProm }}>
+        <Navbar />
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="/add" element={<AddPage />} />
@@ -43,7 +45,7 @@ function App() {
           <Route path="/edit/:id" element={<EditPage/>} />
         </Routes>
       </DBContext.Provider>
-    </>
+    </div>
   );
 }
 

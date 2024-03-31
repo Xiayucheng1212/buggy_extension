@@ -12,7 +12,6 @@ import LinkItem from "./LinkItem";
 import LinkController from "../controller/LinkController";
 import EmptyInformation from "./EmptyInformation";
 import DraftCountNotification from "./DraftCountNotification";
-import { set } from "react-hook-form";
 
 const HomePage = () => {
 	const [tags, setTags] = useState([]);
@@ -62,26 +61,18 @@ const HomePage = () => {
 	};
 
 	return (
-		<div className="w-[350px] h-[500px] px-[30px] pt-[30px] pb-10 bg-white flex-col justify-start items-center gap-1.5 inline-flex">
-			<div className="self-stretch h-10 mb-2 justify-start items-center gap-2.5 inline-flex">
-				<SearchBar handleSearch={handleSearch} />
-				<Link to="/add">
-					<Button logo={add_logo} />
-				</Link>
-				<Link className="relative" to="/draft">
-					<Button logo={draft_logo} />
-					<DraftCountNotification draftCount={draftCount} />
-				</Link>
+		<>
+			<div className="self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
+				{searching
+					? (searchedLinks.length ? searchedLinks.map((link, i) => (
+						<LinkItem key={i} id={link.id} name={link.name} url={link.url} />
+					)) :
+						<EmptyInformation information={"No results found."} />)
+					: tags.map((tag, i) => (
+						<TagItem key={i} name={tag.name} links={tag.links} />
+					))}
 			</div>
-			{searching
-				? (searchedLinks.length ? searchedLinks.map((link, i) => (
-					<LinkItem key={i} id={link.id} name={link.name} url={link.url} />
-				)) :
-					<EmptyInformation information={"No results found."} />)
-				: tags.map((tag, i) => (
-					<TagItem key={i} name={tag.name} links={tag.links} />
-				))}
-		</div>
+		</>
 	);
 };
 
