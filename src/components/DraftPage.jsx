@@ -1,13 +1,14 @@
 /*global chrome*/
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import DraftItem from './DraftItem';
 import EmptyInformation from './EmptyInformation';
-import DBContext from '../DBContext';
+import AppContext from '../AppContext';
 
 export default function DraftPage() {
-    const dbProm = useContext(DBContext).dbProm;
-    var [drafts, setDrafts] = React.useState([]);
+    const context = useContext(AppContext);
+    const dbProm = context.dbProm;
+    var [drafts, setDrafts] = useState([]);
 
     function handleDelete(id) {
         var newDrafts = drafts.filter(draft => draft.id !== id);
@@ -22,6 +23,7 @@ export default function DraftPage() {
             let minus_one = parseInt(badgeText) - 1;
             let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
             chrome.action.setBadgeText({ text: minus_one_count });
+            context.setDraftCount(minus_one_count);
         });
     }
 

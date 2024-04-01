@@ -1,18 +1,13 @@
 /* global chrome */
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import draft_logo from '../imgs/draft.png';
-import stack_logo from '../imgs/stack_icon.png';
-import Button from './Button';
-import SearchBar from './SearchBar';
 import Form from './Form';
-import { Link, useParams } from 'react-router-dom';
-import DBContext from '../DBContext';
+import { useParams } from 'react-router-dom';
+import AppContext from '../AppContext';
 import DraftController from '../controller/DraftController';
-import DraftCountNotification from './DraftCountNotification';
 
 const EditPage = (props) => {
     var draftController = useRef(null);
-    const dbProm = useContext(DBContext).dbProm;
+    const dbProm = useContext(AppContext).dbProm;
     const { id } = useParams();
     const [draft, setDraft] = useState({
         id: 0,

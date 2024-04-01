@@ -4,14 +4,14 @@ import { useForm } from "react-hook-form";
 import FormItem from './FormItem';
 import FormTagItem from './FormTagItem';
 import { useContext } from 'react';
-import DBContext from '../DBContext';
+import AppContext from '../AppContext';
 import LinkController from '../controller/LinkController';
 
 
 export default function Form(props) {
 
     const { register, handleSubmit, setValue } = useForm();
-    const dbProm = useContext(DBContext).dbProm;
+    const dbProm = useContext(AppContext).dbProm;
     const navigate = useNavigate();
 
     const onSubmit = (data) => {

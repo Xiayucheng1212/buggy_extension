@@ -3,12 +3,12 @@ import x_button from "../imgs/x-mark.png";
 import Tag from "./Tag";
 import SelectedTag from "./SelectedTag";
 import TagController from "../controller/TagController";
-import DBContext from "../DBContext";
+import AppContext from "../AppContext";
 
 const FormTagItem = (props) => {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectTags] = useState([]);
-  const dbProm = useContext(DBContext).dbProm;
+  const dbProm = useContext(AppContext).dbProm;
 
 
   useEffect(() => {

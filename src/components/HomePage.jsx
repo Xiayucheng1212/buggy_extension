@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
 import TagItem from "./TagItem";
-import DBContext from "../DBContext";
+import AppContext from "../AppContext";
 import TagController from "../controller/TagController";
 import LinkItem from "./LinkItem";
 import LinkController from "../controller/LinkController";
@@ -13,7 +13,7 @@ const HomePage = (props) => {
 	const [searching, setSearching] = useState(false);
 	const [keyword, setKeyword] = useState("");
 	const [searchedLinks, setSearchedLinks] = useState([]);
-	const dbProm = useContext(DBContext).dbProm;
+	const dbProm = useContext(AppContext).dbProm;
 
 	useEffect(() => {
 		dbProm.then((db) => {

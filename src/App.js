@@ -6,9 +6,11 @@ import AddPage from './components/AddPage';
 import EditPage from './components/EditPage';
 import DraftPage from './components/DraftPage';
 import Navbar from './components/Navbar';
-import DBContext from './DBContext';
+import DBContext from './AppContext';
+import { useState } from 'react';
 
 const App = () => {
+  var [draftCount, setDraftCount] = useState(0);
   let dbProm = openDB('buggy', 1, {
     upgrade(db) {
       db.createObjectStore('links', {
@@ -36,7 +38,7 @@ const App = () => {
 
   return (
     <div className="w-[350px] h-[500px] px-[30px] pt-[30px] pb-10 bg-white flex-col justify-start items-center gap-1.5 inline-flex">
-      <DBContext.Provider value={{ dbProm: dbProm }}>
+      <DBContext.Provider value={{ dbProm: dbProm, draftCount, setDraftCount }}>
         <Navbar />
         <Routes>
           <Route index element={<HomePage />} />

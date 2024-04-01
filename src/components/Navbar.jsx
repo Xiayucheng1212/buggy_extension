@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import SearchBar from './SearchBar';
 import DraftCountNotification from './DraftCountNotification';
 import Button from './Button';
 import HomeButton from './HomeButton';
+import AppContext from '../AppContext';
 
 import stack_logo from '../imgs/stack_icon.png';
 import add_logo from '../imgs/add_icon.png';
 import draft_logo from '../imgs/draft.png';
 
 const Navbar = () => {
-    const [draftCount, setDraftCount] = useState(0);
+    const draftCount = useContext(AppContext).draftCount;
+    const setDraftCount = useContext(AppContext).setDraftCount;
 
     const handleSearch = (searchBarInput) => {
         console.log(searchBarInput);
@@ -20,9 +22,7 @@ const Navbar = () => {
     useEffect(() => {
         if (!chrome.action) return;
         chrome.action.getBadgeText({}, (badgeText) => {
-            console.log(badgeText);
-            let count = parseInt(badgeText) || 0;
-            setDraftCount(count);
+            setDraftCount(parseInt(badgeText) || 0);
         });
     });
 

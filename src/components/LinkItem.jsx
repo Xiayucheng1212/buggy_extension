@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import delete_logo from "../imgs/delete.png";
 import CopyToClipboardButton from "./CopyToClipboardButton";
-import DBContext from "../DBContext";
+import AppContext from "../AppContext";
 import LinkController from "../controller/LinkController";
 
 const LinkItem = (props) => {
-  const dbProm = useContext(DBContext).dbProm;
+  const dbProm = useContext(AppContext).dbProm;
 
   function handleClickUrl() {
     chrome.tabs.create({ url: props.url });
