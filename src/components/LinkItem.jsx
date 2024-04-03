@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useNavigate } from 'react-router-dom';
 import delete_logo from "../imgs/delete.png";
 import CopyToClipboardButton from "./CopyToClipboardButton";
 import AppContext from "../AppContext";
@@ -6,6 +7,7 @@ import LinkController from "../controller/LinkController";
 
 const LinkItem = (props) => {
   const dbProm = useContext(AppContext).dbProm;
+  const navigate = useNavigate();
 
   function handleClickUrl() {
     chrome.tabs.create({ url: props.url });
@@ -14,11 +16,17 @@ const LinkItem = (props) => {
   function handleDelete() {
     dbProm.then((db) => {
       const linkController = new LinkController(db);
-      linkController.delete(props.id).then(() => {
-        console.log("deleted");
+      linkController.delete(props.id).then(async (newAllTags) => {
         props.setLinks((prev) => {
-          return prev.filter((link, i) => link.id !== props.id);
+           return prev.filter((link, i) => link.id !== props.id);
         });
+        for(let tag of newAllTags) {
+          // populate links in the tag
+          var links = await linkController.getLinks(tag.links);
+          tag.links = links;
+        }
+        console.log(newAllTags);
+        props.setTags(newAllTags);
       });
     })
   }

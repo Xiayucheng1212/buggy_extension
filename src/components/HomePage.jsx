@@ -30,7 +30,7 @@ const HomePage = (props) => {
 			: setSearching(false);
 	}, [searchedLinks]);
 
-	let handleSearch = (searchBarInput) => {
+	const handleSearch = (searchBarInput) => {
 		console.log(searching);
 		setKeyword(searchBarInput);
 		if (searchBarInput === "") {
@@ -53,7 +53,7 @@ const HomePage = (props) => {
 				)) :
 					<EmptyInformation information={"No results found."} />)
 				: tags.map((tag, i) => (
-					<TagItem key={i} name={tag.name} links={tag.links} />
+					<TagItem key={i} name={tag.name} links={tag.links} setTags={setTags}/>
 				))}
 		</div>
 	);

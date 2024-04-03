@@ -8,7 +8,11 @@ const TagItem = (props) => {
 
     useEffect(() => {
         if (links.length === 0) setToggle(false);
-    }, [links]);
+        setLinks(props.links);
+        console.log("TagItem useEffect called.");
+        console.log("new", props.links);
+
+    }, [props.links]);
 
     const handleClick = () => {
         setToggle(!toggle);
@@ -26,7 +30,7 @@ const TagItem = (props) => {
             {toggle &&
                 <>
                     {links.map((link, i) => (
-                        <LinkItem key={i} id={link.id} name={link.name} url={link.url} setLinks={setLinks} />
+                        <LinkItem key={i} id={link.id} name={link.name} url={link.url} setLinks={setLinks} setTags={props.setTags} />
                     ))}
                 </>
             }

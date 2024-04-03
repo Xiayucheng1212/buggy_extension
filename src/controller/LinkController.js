@@ -5,15 +5,25 @@ var LinkController = function (db) {
     this.collection_name = "links";
 }
 
+// @param linkIds: array
+LinkController.prototype.getLinks = async function (linkIds) {
+    var links = [];
+    for (let id of linkIds) {
+        let link = await this.db.transaction('links').objectStore('links').get(id);
+        links.push(link);   
+    }
+    return links;
+}
+
 LinkController.prototype.delete = async function (link_id) {
     // find all tags under this link and delete this link from the tags
     var tagController = new TagController(this.db);
-    this.db.transaction('links').objectStore('links').get(link_id).then(async (link) => {
-        await tagController.deleteLinkFromTag(link.tags, link_id);
-        await this.db.transaction('links', 'readwrite').objectStore('links').delete(link_id);
-    });
+    var newAllTags = [];
+    var link = await this.db.transaction('links').objectStore('links').get(link_id);
+    newAllTags = await tagController.deleteLinkFromTag(link.tags, link_id);
+    await this.db.transaction('links', 'readwrite').objectStore('links').delete(link_id);
 
-    return true;
+    return newAllTags;
 }
 
 LinkController.prototype.getAll = function () {

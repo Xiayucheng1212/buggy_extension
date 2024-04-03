@@ -3,19 +3,24 @@ var TagController = function (db) {
     this.collection_name = "tags";
 }
 
-TagController.prototype.deleteLinkFromTag = function (tag_ids, link_id) {
-    return this.db.transaction('tags', 'readwrite').objectStore('tags').getAll().then((tags) => {
-        tags.forEach(async (tag) => {
-            if (tag_ids.includes(tag.id)) {
-                tag.links = tag.links.filter((link) => link !== link_id);
-                await this.db.transaction('tags', 'readwrite').objectStore('tags').put(tag);
+TagController.prototype.deleteLinkFromTag = async function (tag_ids, link_id) {
+    // change the following code to use async/await
+    var allTags = await this.db.transaction('tags').objectStore('tags').getAll();
 
-                if (tag.links.length === 0) {
-                    await this.db.transaction('tags', 'readwrite').objectStore('tags').delete(tag.id);
-                }
-            }
-        });
-    });
+    var newAllTags = []
+
+    for (let tag of allTags) {
+        if (tag_ids.includes(tag.id)) {
+            tag.links = tag.links.filter((link) => link !== link_id);
+            await this.db.transaction('tags', 'readwrite').objectStore('tags').put(tag);
+        }
+        if (tag.links.length === 0) {
+            await this.db.transaction('tags', 'readwrite').objectStore('tags').delete(tag.id);
+        } else {
+            newAllTags.push(tag);
+        }
+    }
+    return newAllTags;
 }
 
 TagController.prototype.getAll = function () {
