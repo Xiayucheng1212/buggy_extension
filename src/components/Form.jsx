@@ -43,7 +43,7 @@ export default function Form(props) {
     });
 
     return (
-        <div className="h-auto overflow-y-scroll">
+        <div className="h-auto overflow-y-scroll pb-[18px]">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='w-[100%] h-[100%] flex-col justify-start items-center inline-flex gap-[18px]'>
                     <FormItem name="url" label="URL*" register={register} setValue={setValue}/>
