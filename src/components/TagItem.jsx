@@ -21,7 +21,7 @@ const TagItem = (props) => {
     const rotation = toggle ? 'rotate(90deg)' : 'rotate(0deg)';
     return (
         <>
-            <div className="self-stretch pl-2 rounded-[5px] hover:bg-zinc-200 bg-white justify-start items-center gap-[15px] inline-flex" style={{ cursor: 'pointer' }} onClick={handleClick}>
+            <div className="self-stretch h-[35px] pl-2 rounded-[5px] hover:bg-zinc-200 bg-white justify-start items-center gap-[15px] inline-flex" style={{ cursor: 'pointer' }} onClick={handleClick}>
                 <div>
                     <img className="w-[15px] h-[15px]" src={toggle_icon} alt='erase_button' style={{ transform: rotation, transition: 'transform 0.2s' }} />
                 </div>

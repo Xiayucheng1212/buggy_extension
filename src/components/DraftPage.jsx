@@ -4,12 +4,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import DraftItem from './DraftItem';
 import EmptyInformation from './EmptyInformation';
 import AppContext from '../AppContext';
-import { get } from 'react-hook-form';
 
 const DraftPage = () => {
     const dbProm = useContext(AppContext).dbProm;
     const setDraftCount = useContext(AppContext).setDraftCount;
-    const [drafts, setDrafts] = useState([]);
+    const [drafts, setDrafts] = useState([{
+        id: 1,
+        name: "hello",
+        url: "aaa"
+    }]);
 
     const handleDelete = (id) => {
         let newDrafts = drafts.filter(draft => draft.id !== id);
@@ -36,9 +39,9 @@ const DraftPage = () => {
         });
     }
 
-    useEffect(() => {
-        getDrafts();
-    });
+    // useEffect(() => {
+    //     getDrafts();
+    // });
 
     useEffect(() => {
         if (!chrome.runtime) return;

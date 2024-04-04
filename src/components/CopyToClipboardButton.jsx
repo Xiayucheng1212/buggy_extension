@@ -17,8 +17,9 @@ const CopyToClipboardButton = (props) => {
   return (
     <CopyToClipboard text={props.url}>
       <div
-        className="w-6 h-6 p-[6px] hover:bg-zinc-200 bg-zinc-100 rounded-[5px] justify-center items-center gap-2.5 inline-flex"
+        className={`w-${props.size} h-${props.size} p-[${props.size}px] hover:bg-zinc-200 bg-zinc-100 rounded-[5px] justify-center items-center gap-2.5 inline-flex`}
         onClick={!copied && handleClick}
+        style={{ cursor: 'pointer' }}
       >
         <img
           className="select-none"

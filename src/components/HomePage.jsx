@@ -1,6 +1,5 @@
 /* global chrome */
 import React, { useState, useEffect, useContext } from "react";
-
 import TagItem from "./TagItem";
 import AppContext from "../AppContext";
 import TagController from "../controller/TagController";

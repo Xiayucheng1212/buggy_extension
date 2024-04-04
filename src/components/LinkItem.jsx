@@ -7,7 +7,7 @@ import LinkController from "../controller/LinkController";
 
 const LinkItem = (props) => {
   const dbProm = useContext(AppContext).dbProm;
-  const navigate = useNavigate();
+  const buttonSize = 6;
 
   function handleClickUrl() {
     chrome.tabs.create({ url: props.url });
@@ -22,7 +22,7 @@ const LinkItem = (props) => {
         });
         for(let tag of newAllTags) {
           // populate links in the tag
-          var links = await linkController.getLinks(tag.links);
+          let links = await linkController.getLinks(tag.links);
           tag.links = links;
         }
         console.log(newAllTags);
@@ -32,17 +32,17 @@ const LinkItem = (props) => {
   }
 
   return (
-    <div className="w-[290px] h-[35px] justify-start items-start inline-flex">
-      <div className="w-[290px] self-stretch pl-[25px] justify-start items-center gap-2.5 flex">
-        <div className="h-[31px] bg-white justify-start items-center gap-[15px] flex">
+    <div className="self-stretch h-[35px] justify-start items-start inline-flex">
+      <div className="w-full pl-[25px] pr-[15px] justify-between items-center gap-2.5 flex">
+        <div className="h-[30px] bg-white justify-start items-center gap-[15px] flex">
           <div className="w-[180px] h-[30px] pr-[11px] flex-col justify-center items-start inline-flex" onClick={handleClickUrl} style={{cursor: 'pointer'}}>
             <div className="text-neutral-600 text-xs font-bold font-['Jost']">{props.name}</div>
             <div className="overflow-x-auto text-neutral-600 text-[10px] font-medium font-['Jost']" style={{maxHeight: '50px'}}>{props.url}</div>
           </div>
         </div>
-        <div className="w-[47px] h-[30px] flex justify-center content-center space-x-2">
-          <CopyToClipboardButton url={props.url} />
-          <div className="w-5 h-5 p-[5px] bg-zinc-100 rounded-[5px] justify-center items-center gap-2.5 inline-flex" onClick={handleDelete}>
+        <div className="flex justify-between item-center space-x-2">
+          <CopyToClipboardButton url={props.url} size={buttonSize}/>
+          <div className={`w-${buttonSize} h-${buttonSize} p-[${buttonSize}px] hover:bg-zinc-200 bg-zinc-100 rounded-[5px] justify-center items-center gap-2.5 inline-flex`} style={{cursor: 'pointer'}} onClick={handleDelete}>
             <img src={delete_logo} alt="delete url"></img>
           </div>
         </div>
