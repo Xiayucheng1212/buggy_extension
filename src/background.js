@@ -1,9 +1,8 @@
 /* global chrome */
-import { get } from "react-hook-form";
 import DraftController from "./controller/DraftController";
 import { openDB } from "idb";
 
-var dbProm = openDB("buggy", 1, {
+let dbProm = openDB("buggy", 1, {
   upgrade(db) {
     db.createObjectStore("links", {
       keyPath: "id",
@@ -29,14 +28,15 @@ var dbProm = openDB("buggy", 1, {
 });
 
 // add Listener for commands
-chrome.commands.onCommand.addListener(function (command) {
-  // command: add_draft
+chrome.commands.onCommand.addListener((command) => {
+  // command: add-draft
   dbProm.then((db) => {
-    var controller = new DraftController(db);
+    let controller = new DraftController(db);
     chrome.tabs
       .query({ active: true, lastFocusedWindow: true })
       .then(([tab]) => {
         console.log(tab);
+        if (!tab) return;
         controller.addDraft({
           name: tab.title,
           url: tab.url,
@@ -48,6 +48,7 @@ chrome.commands.onCommand.addListener(function (command) {
       let count = parseInt(badgeText) || 0;
       let add_one_count = (count + 1).toString();
       chrome.action.setBadgeText({ text: add_one_count });
+      chrome.runtime.sendMessage({ type: command });
     });
   });
 });

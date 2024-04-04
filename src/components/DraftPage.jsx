@@ -4,14 +4,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import DraftItem from './DraftItem';
 import EmptyInformation from './EmptyInformation';
 import AppContext from '../AppContext';
+import { get } from 'react-hook-form';
 
-export default function DraftPage() {
-    const context = useContext(AppContext);
-    const dbProm = context.dbProm;
-    var [drafts, setDrafts] = useState([]);
+const DraftPage = () => {
+    const dbProm = useContext(AppContext).dbProm;
+    const setDraftCount = useContext(AppContext).setDraftCount;
+    const [drafts, setDrafts] = useState([]);
 
-    function handleDelete(id) {
-        var newDrafts = drafts.filter(draft => draft.id !== id);
+    const handleDelete = (id) => {
+        let newDrafts = drafts.filter(draft => draft.id !== id);
         dbProm.then((db) => {
             db.transaction('drafts', 'readwrite').objectStore('drafts').delete(id).then(() => {
                 console.log("deleted");
@@ -23,17 +24,36 @@ export default function DraftPage() {
             let minus_one = parseInt(badgeText) - 1;
             let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
             chrome.action.setBadgeText({ text: minus_one_count });
-            context.setDraftCount(minus_one_count);
+            setDraftCount(minus_one_count);
         });
     }
 
-    useEffect(() => {
+    const getDrafts = () => {
         dbProm.then((db) => {
             db.transaction('drafts').objectStore('drafts').getAll().then((drafts) => {
                 setDrafts(drafts);
             });
         });
-    }, []);
+    }
+
+    useEffect(() => {
+        getDrafts();
+    });
+
+    useEffect(() => {
+        if (!chrome.runtime) return;
+        const AddDraftByShortcutListener = (request, sender, sendResponse) => {
+            console.log(request);
+            if (request.type === "add-draft") {
+                getDrafts();
+                sendResponse({ status: "received" });
+            }
+        }
+        chrome.runtime.onMessage.addListener(AddDraftByShortcutListener);
+        return () => {
+            chrome.runtime.onMessage.removeListener(AddDraftByShortcutListener);
+        }
+    });
 
     return (
         <div className="h-full self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
@@ -46,3 +66,5 @@ export default function DraftPage() {
         </div>
     )
 }
+
+export default DraftPage;

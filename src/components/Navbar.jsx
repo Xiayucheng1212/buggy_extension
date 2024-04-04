@@ -28,6 +28,21 @@ const Navbar = () => {
         });
     });
 
+    useEffect(() => {
+        if(!chrome.runtime) return;
+        const AddDraftByShortcutListener = (request, sender, sendResponse) => {
+            console.log(request);
+            if (request.type === "add-draft") {
+                setDraftCount(draftCount + 1);
+                sendResponse({ status: "received" });
+            }
+        }
+        chrome.runtime.onMessage.addListener(AddDraftByShortcutListener);
+        return () => {
+            chrome.runtime.onMessage.removeListener(AddDraftByShortcutListener);
+        }
+    });
+
     return (
         <div className="self-stretch h-10 mb-2 justify-start items-center gap-2 inline-flex">
             <Link to="/"><HomeButton logo={stack_logo} /></Link>
