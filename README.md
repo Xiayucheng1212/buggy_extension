@@ -9,7 +9,7 @@ We are computer science students who are suffered from searching for the same qu
 
 ```
 npm run build
-webpack
+npx webpack
 ```
 
 Load the `/build` folder to the extension page.

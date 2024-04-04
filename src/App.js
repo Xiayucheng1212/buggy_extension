@@ -10,7 +10,8 @@ import DBContext from './AppContext';
 import { useState } from 'react';
 
 const App = () => {
-  var [draftCount, setDraftCount] = useState(0);
+  const [draftCount, setDraftCount] = useState(0);
+  const [searchBarInput, setSearchBarInput] = useState("");
   let dbProm = openDB('buggy', 1, {
     upgrade(db) {
       db.createObjectStore('links', {
@@ -37,8 +38,8 @@ const App = () => {
   })
 
   return (
-    <div className="w-[350px] h-[500px] px-[30px] pt-[30px] pb-10 bg-white flex-col justify-start items-center gap-1.5 inline-flex">
-      <DBContext.Provider value={{ dbProm: dbProm, draftCount, setDraftCount }}>
+    <div className="w-[350px] h-[500px] p-[20px] bg-white flex-col justify-start items-center gap-1.5 inline-flex">
+      <DBContext.Provider value={{ dbProm: dbProm, draftCount, setDraftCount, searchBarInput, setSearchBarInput }}>
         <Navbar />
         <Routes>
           <Route index element={<HomePage />} />

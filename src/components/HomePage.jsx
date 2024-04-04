@@ -11,9 +11,9 @@ import EmptyInformation from "./EmptyInformation";
 const HomePage = (props) => {
 	const [tags, setTags] = useState([]);
 	const [searching, setSearching] = useState(false);
-	const [keyword, setKeyword] = useState("");
 	const [searchedLinks, setSearchedLinks] = useState([]);
 	const dbProm = useContext(AppContext).dbProm;
+	const searchBarInput = useContext(AppContext).searchBarInput;
 
 	useEffect(() => {
 		dbProm.then((db) => {
@@ -25,15 +25,7 @@ const HomePage = (props) => {
 	}, []);
 
 	useEffect(() => {
-		searchedLinks.length || keyword.length
-			? setSearching(true)
-			: setSearching(false);
-	}, [searchedLinks]);
-
-	const handleSearch = (searchBarInput) => {
-		console.log(searching);
-		setKeyword(searchBarInput);
-		if (searchBarInput === "") {
+		if(searchBarInput.length === 0) {
 			setSearchedLinks([]);
 			return;
 		}
@@ -43,10 +35,16 @@ const HomePage = (props) => {
 				setSearchedLinks(links);
 			});
 		});
-	};
+	}, [searchBarInput]);
+
+	useEffect(() => {
+		searchedLinks.length || searchBarInput.length
+			? setSearching(true)
+			: setSearching(false);
+	}, [searchedLinks]);
 
 	return (
-		<div className="self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
+		<div className="h-full self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
 			{searching
 				? (searchedLinks.length ? searchedLinks.map((link, i) => (
 					<LinkItem key={i} id={link.id} name={link.name} url={link.url} />

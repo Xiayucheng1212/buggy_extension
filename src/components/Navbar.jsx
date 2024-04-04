@@ -12,11 +12,13 @@ import add_logo from '../imgs/add_icon.png';
 import draft_logo from '../imgs/draft.png';
 
 const Navbar = () => {
+   const searchBarInput = useContext(AppContext).searchBarInput;
+   const setSearchBarInput = useContext(AppContext).setSearchBarInput;
     const draftCount = useContext(AppContext).draftCount;
     const setDraftCount = useContext(AppContext).setDraftCount;
 
-    const handleSearch = (searchBarInput) => {
-        console.log(searchBarInput);
+    const handleSearch = (input) => {
+        setSearchBarInput(input);
     }
 
     useEffect(() => {
