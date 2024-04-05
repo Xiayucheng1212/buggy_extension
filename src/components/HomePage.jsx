@@ -42,6 +42,19 @@ const HomePage = (props) => {
 			: setSearching(false);
 	}, [searchedLinks]);
 
+	const editTag = (tagId, tagName) => {
+		console.log(tagId, tagName);
+		dbProm.then((db) => {
+			const tagController = new TagController(db);
+			tagController.updateTag(tagId, tagName).then(() => {
+				tagController.getAllLinksByTags().then((tags) => {
+					console.log(tags);
+					setTags(tags);
+				});
+			});
+		});
+	}
+
 	return (
 		<div className="h-full self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
 			{searching
@@ -50,7 +63,7 @@ const HomePage = (props) => {
 				)) :
 					<EmptyInformation information={"No results found."} />)
 				: tags.map((tag, i) => (
-					<TagItem key={i} name={tag.name} links={tag.links} setTags={setTags}/>
+					<TagItem key={i} id={tag.id} name={tag.name} links={tag.links} setTags={setTags} editTag={editTag} />
 				))}
 		</div>
 	);

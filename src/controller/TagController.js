@@ -46,11 +46,18 @@ TagController.prototype.addLinkToTag = function (tag_ids, link_id) {
     });
 }
 
+TagController.prototype.updateTag = function (tag_id, new_name) {
+    return this.db.transaction('tags', 'readwrite').objectStore('tags').get(tag_id).then((tag) => {
+        tag.name = new_name;
+        return this.db.transaction('tags', 'readwrite').objectStore('tags').put(tag);
+    });
+}
+
 TagController.prototype.getAllLinksByTags = function () {
     var new_tags = [];
     return this.db.transaction('tags').objectStore('tags').getAll().then((tags) => {
         tags.forEach((tag) => {
-            var new_tag = { name: tag.name, links: [] };
+            var new_tag = { name: tag.name, links: [], id: tag.id };
 
             tag.links.forEach((link) => {
                 this.db.transaction('links').objectStore('links').get(link).then((l) => {
