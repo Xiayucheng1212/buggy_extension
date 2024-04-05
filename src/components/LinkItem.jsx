@@ -35,9 +35,9 @@ const LinkItem = (props) => {
     <div className="self-stretch h-[35px] justify-start items-start inline-flex">
       <div className="w-full pl-[40px] pr-[15px] justify-between items-center gap-2.5 flex">
         <div className="h-[30px] bg-white justify-start items-center gap-[15px] flex">
-          <div className="w-[180px] h-[30px] pr-[11px] flex-col justify-center items-start inline-flex" onClick={handleClickUrl} style={{cursor: 'pointer'}}>
-            <div className="text-neutral-600 text-xs font-bold font-['Jost']">{props.name}</div>
-            <div className="overflow-x-auto text-neutral-600 text-[10px] font-medium font-['Jost']" style={{maxHeight: '50px'}}>{props.url}</div>
+          <div className="w-[180px] h-[30px] pr-[11px] flex-col justify-center items-start inline-flex overflow-y-scroll" onClick={handleClickUrl} style={{cursor: 'pointer'}}>
+            <div className="text-neutral-600 text-xs font-bold font-['Jost'] text-nowrap">{props.name}</div>
+            <div className="text-neutral-600 text-[10px] font-medium font-['Jost']" style={{maxHeight: '50px'}}>{props.url}</div>
           </div>
         </div>
         <div className="flex justify-between item-center space-x-2">
