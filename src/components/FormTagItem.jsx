@@ -74,6 +74,7 @@ const FormTagItem = (props) => {
             <input
               className="bg-transparent resize-none text-neutral-600 text-xs font-medium font-['Jost']"
               disabled
+              required
               placeholder="Click to select"
             />
           ) : (

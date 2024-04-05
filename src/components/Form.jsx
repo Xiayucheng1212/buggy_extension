@@ -16,7 +16,8 @@ export default function Form(props) {
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
+        if(data.tags.length === 0) return;
         dbProm.then(async (db) => {
             const linkController = new LinkController(db);
             await linkController.addLink(data)
@@ -73,7 +74,7 @@ export default function Form(props) {
                         setValue={setValue}
                     />
                     {/* Add Button */}
-                    <div className="w-[100px] px-[17px] py-2 hover:bg-red-600 bg-red-400 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
+                    <div className="w-[100px] px-[17px] py-2 hover:bg-red-400 bg-red-600 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
                         <input type='submit' className="w-[61px] h-[13px] text-center text-white text-[15px] font-normal font-['Jost'] leading-[14.10px]" value="Add"></input>
                     </div>
                 </div>
