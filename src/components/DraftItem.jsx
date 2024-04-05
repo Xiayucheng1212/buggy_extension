@@ -11,7 +11,7 @@ const DraftItem = (props) => {
         navigate(`/edit/${props.id}`);
     }
     return (
-        <div className="h-[35px] self-stretch px-2 justify-between items-center inline-flex hover:bg-zinc-200 ">
+        <div className="h-[40px] self-stretch px-2 rounded-[5px] justify-between items-center inline-flex hover:bg-zinc-200 ">
             <div className="w-[200px] h-[30px] pr-[10px] flex-col justify-center items-start inline-flex cursor-pointer" onClick={handleClick}>
                 <div className="w-[190px] text-neutral-600 text-xs font-bold font-['Jost'] truncate hover:text-clip">{props.name}</div>
                 <div className="w-[190px] text-neutral-600 text-[10px] font-medium font-['Jost'] truncate hover:text-clip">{props.url}</div>

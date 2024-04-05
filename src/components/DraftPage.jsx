@@ -8,11 +8,7 @@ import AppContext from '../AppContext';
 const DraftPage = () => {
     const dbProm = useContext(AppContext).dbProm;
     const setDraftCount = useContext(AppContext).setDraftCount;
-    const [drafts, setDrafts] = useState([{
-        id: 1,
-        name: "hello",
-        url: "aaa"
-    }]);
+    const [drafts, setDrafts] = useState([]);
 
     const handleDelete = (id) => {
         let newDrafts = drafts.filter(draft => draft.id !== id);
@@ -39,9 +35,9 @@ const DraftPage = () => {
         });
     }
 
-    // useEffect(() => {
-    //     getDrafts();
-    // });
+    useEffect(() => {
+        getDrafts();
+    });
 
     useEffect(() => {
         if (!chrome.runtime) return;

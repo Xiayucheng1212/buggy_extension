@@ -64,12 +64,12 @@ const FormTagItem = (props) => {
   };
 
   return (
-    <div className="self-stretch p-[9px] bg-zinc-100 rounded-[5px] flex-col justify-center items-start flex">
+    <div className="w-[310px] p-[9px] bg-zinc-100 rounded-[5px] flex-col justify-center items-start flex">
       <div className="w-[105px] h-5 text-black text-[13px] font-normal font-['Jost'] leading-3">
         {props.label}
       </div>
-      <div className="self-stretch h-[30px] pl-[10px] pr-2.5 py-[5px] bg-zinc-300 rounded-t-[5px] flex space-x items-center">
-        <div className="w-[230px] h-[24px] flex mr-[10px] bg-transparent bg-zinc-300 justify-start items-center gap-x-2 overflow-x-scroll">
+      <div className="w-full h-[30px] pl-[10px] pr-2.5 py-[5px] bg-zinc-300 rounded-t-[5px] flex justify-between items-center">
+        <div className="w-full resize-none flex mr-[10px] bg-transparent bg-zinc-300 items-center overflow-x-auto">
           {selectedTags.length === 0 ? (
             <input
               className="bg-transparent resize-none text-neutral-600 text-xs font-medium font-['Jost']"
@@ -77,18 +77,19 @@ const FormTagItem = (props) => {
               placeholder="Click to select"
             />
           ) : (
-            selectedTags.map((tag, i) => (
-              <SelectedTag key={i} name={tag} onClick={handleClearOne} />
-            ))
+            <div className="w-full flex gap-x-2 overflow-x-scroll">
+              {selectedTags.map((tag, i) => (
+                <SelectedTag key={i} name={tag} onClick={handleClearOne} />
+              ))}
+            </div>
           )}
         </div>
-        <div className="w-3 h-3" onClick={handleClearAll}>
-          <img
-            className="w-3 h-3 justify-center items-center"
-            src={x_button}
-            alt="erase"
-          />
-        </div>
+        <img
+          className="w-3 h-3 justify-center items-center"
+          onClick={handleClearAll}
+          src={x_button}
+          alt="erase"
+        />
       </div>
       <div className="w-full flex flex-wrap p-[10px] bg-white rounded-b-[5px] justify-start items-center gap-2">
         {tags.map((tag, i) => (

@@ -35,7 +35,7 @@ const EditPage = (props) => {
 
     return (
         <>
-            <div className="h-full self-stretch bg-white flex-col justify-start items-center gap-[14px] inline-flex">
+            <div className="self-stretch overflow-x-scroll bg-white flex-col justify-start items-center gap-[14px] inline-flex">
                 <div className="w-full h-10 flex-col justify-start items-start inline-flex font-bold">Push Draft To Stack</div>
                 <Form draft_id={draft.id} url={draft.url} name={draft.name} description={draft.description} handleDeleteDraft={handleDeleteDraft} />
             </div>
