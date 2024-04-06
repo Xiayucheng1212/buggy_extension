@@ -7,6 +7,7 @@ import AppContext from "../AppContext";
 
 const FormTagItem = (props) => {
   const [tags, setTags] = useState([]);
+  const [addedNewTag, setAddedNewTag] = useState("");
   const [selectedTags, setSelectTags] = useState([]);
   const dbProm = useContext(AppContext).dbProm;
 
@@ -38,6 +39,11 @@ const FormTagItem = (props) => {
     setSelectTags([]);
   };
 
+  const handleClear = (e) => {
+    e.preventDefault();
+    setAddedNewTag("");
+  }
+
   const handleAddNewTag = (e) => {
     function isEmptyString(str){
       return str === null || str === '';
@@ -49,7 +55,7 @@ const FormTagItem = (props) => {
 
     if (e.key === "Enter") {
       e.preventDefault();
-      const newTag = removeSpace(e.target.value.trim());
+      const newTag = removeSpace(addedNewTag.trim());
       if (isEmptyString(newTag) || tags.find((tag) => tag === newTag)) return;
 
       dbProm.then((db) => {
@@ -57,7 +63,7 @@ const FormTagItem = (props) => {
         tagController.addTag(newTag).then((tag) => {
           setTags([...tags, newTag]);
           setSelectTags([...selectedTags, newTag]);
-          e.target.value = "";
+          setAddedNewTag("");
         });
       });
     }
@@ -100,12 +106,15 @@ const FormTagItem = (props) => {
           <input
             className="w-full mr-[10px] bg-transparent resize-none text-neutral-600 text-xs font-medium font-['Jost']"
             placeholder="Add a tag"
+            value={addedNewTag}
+            onChange={(e) => setAddedNewTag(e.target.value)}
             onKeyDown={handleAddNewTag}
           />
           <img
             className="w-3 h-3 relative flex-col justify-center items-center"
             src={x_button}
             alt="erase"
+            onClick={handleClear}
           />
         </div>
       </div>

@@ -59,7 +59,7 @@ export default function Form(props) {
                         label="*Name"
                         register={register}
                         rules={{ required: "Name is required" }}
-                        etValue={setValue}
+                        setValue={setValue}
                     />
                     <FormItem
                         name="description"
