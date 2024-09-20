@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import x_button from "../imgs/x-mark.png";
+
 import Tag from "./Tag";
 import SelectedTag from "./SelectedTag";
 import TagController from "../controller/TagController";
 import AppContext from "../AppContext";
+
+import x_button from "../imgs/x-mark.png";
 
 const FormTagItem = (props) => {
   const [tags, setTags] = useState([]);

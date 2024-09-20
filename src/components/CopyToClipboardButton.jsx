@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import link_logo from "../imgs/link_icon.png";
-import check_logo from "../imgs/check_icon.png";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+
+import link_logo from "../imgs/link-icon.png";
+import check_logo from "../imgs/check-icon.png";
 
 const CopyToClipboardButton = (props) => {
   const [copied, setCopied] = useState(false);

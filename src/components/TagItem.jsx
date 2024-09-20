@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import toggle_icon from '../imgs/right-arrow.png';
+
 import LinkItem from './LinkItem';
-import { set } from 'react-hook-form';
+
+import toggle_icon from '../imgs/right-arrow.png';
 
 const TagItem = (props) => {
     const [name, setName] = useState(props.name);
