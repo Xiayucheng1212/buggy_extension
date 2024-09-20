@@ -55,7 +55,7 @@ const DraftPage = () => {
     });
 
     return (
-        <div className="h-full self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
+        <div className="h-full self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex overflow-y-scroll">
             {drafts.length === 0 ?
                 <EmptyInformation information={"No Drafts."} /> :
                 drafts.map((draft, i) =>

@@ -14,6 +14,7 @@ const HomePage = (props) => {
 	const [searchedLinks, setSearchedLinks] = useState([]);
 	const dbProm = useContext(AppContext).dbProm;
 	const searchBarInput = useContext(AppContext).searchBarInput;
+	const setSearchBarInput = useContext(AppContext).setSearchBarInput;
 
 	useEffect(() => {
 		dbProm.then((db) => {
