@@ -1,8 +1,9 @@
 /* global chrome */
 import React, { useEffect, useState, useContext, useRef } from 'react';
-import Form from './Form';
 import { useParams } from 'react-router-dom';
+
 import AppContext from '../AppContext';
+import Form from './Form';
 import DraftController from '../controller/DraftController';
 
 const EditPage = (props) => {

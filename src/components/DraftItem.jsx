@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+
+import CopyToClipboardButton from './CopyToClipboardButton';
+
 import up_logo from '../imgs/up-arrow.png';
 import delete_logo from '../imgs/delete.png';
-import CopyToClipboardButton from './CopyToClipboardButton';
-import { Link, useNavigate } from 'react-router-dom';
 
 const DraftItem = (props) => {
     const navigate = useNavigate();

@@ -7,8 +7,8 @@ import Button from './Button';
 import HomeButton from './HomeButton';
 import AppContext from '../AppContext';
 
-import stack_logo from '../imgs/stack_icon.png';
-import add_logo from '../imgs/add_icon.png';
+import stack_logo from '../imgs/stack-icon.png';
+import add_logo from '../imgs/add-icon.png';
 import draft_logo from '../imgs/draft.png';
 
 const Navbar = () => {

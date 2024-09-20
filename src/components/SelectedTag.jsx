@@ -1,4 +1,5 @@
 import React from "react";
+
 import x_button from "../imgs/x-button.png";
 
 const SelectedTag = (props) => {
