@@ -11,7 +11,7 @@ import stack_logo from '../imgs/stack-icon.png';
 import add_logo from '../imgs/add-icon.png';
 import draft_logo from '../imgs/draft.png';
 
-const Navbar = () => {
+const Navbar = (props) => {
    const searchBarInput = useContext(AppContext).searchBarInput;
    const setSearchBarInput = useContext(AppContext).setSearchBarInput;
     const draftCount = useContext(AppContext).draftCount;
@@ -46,7 +46,7 @@ const Navbar = () => {
     return (
         <div className="self-stretch h-10 mb-2 justify-start items-center gap-2 inline-flex">
             <Link to="/"><HomeButton logo={stack_logo} /></Link>
-            <SearchBar handleSearch={handleSearch}/>
+            <SearchBar handleSearch={handleSearch} disabled={!props.isHomePage}/>
             <Link to="/add"><Button logo={add_logo} /></Link>
             <Link className="relative" to="/draft">
                 <Button logo={draft_logo} />

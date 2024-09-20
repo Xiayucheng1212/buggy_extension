@@ -1,17 +1,20 @@
-import './App.css';
+import { useEffect, useState } from 'react';
 import { openDB } from 'idb';
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
+
 import HomePage from './components/HomePage';
 import AddPage from './components/AddPage';
 import EditPage from './components/EditPage';
 import DraftPage from './components/DraftPage';
 import Navbar from './components/Navbar';
 import DBContext from './AppContext';
-import { useState } from 'react';
+
+import './App.css';
 
 const App = () => {
   const [draftCount, setDraftCount] = useState(0);
   const [searchBarInput, setSearchBarInput] = useState("");
+  const [isHomePage, setIsHomePage] = useState(true);
   let dbProm = openDB('buggy', 1, {
     upgrade(db) {
       db.createObjectStore('links', {
@@ -37,10 +40,20 @@ const App = () => {
     }
   })
 
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setIsHomePage(true);
+    } else {
+      setIsHomePage(false);
+    }
+  }, [location]);
+
   return (
     <div className="w-[350px] h-[500px] p-[20px] bg-white flex-col justify-start items-center gap-1.5 inline-flex">
       <DBContext.Provider value={{ dbProm: dbProm, draftCount, setDraftCount, searchBarInput, setSearchBarInput }}>
-        <Navbar />
+        <Navbar isHomePage={isHomePage} />
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="/add" element={<AddPage />} />
