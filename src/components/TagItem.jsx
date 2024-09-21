@@ -30,7 +30,6 @@ const TagItem = (props) => {
 
     const handleDoubleClick = () => {
         setEditing(true);
-        console.log("Editing.");
     }
 
     const handleEditing = (e) => {
@@ -50,7 +49,7 @@ const TagItem = (props) => {
     const rotation = toggle ? 'rotate(90deg)' : 'rotate(0deg)';
     return (
         <>
-            <div className="self-stretch h-[35px] bg-white justify-start items-center gap-[10px] inline-flex">
+            <div className="self-stretch h-[35px] bg-white justify-start items-center gap-[10px] inline-flex flex-shrink-0">
                 <div className='p-2 hover:bg-zinc-200 rounded-[5px]' style={{ cursor: 'pointer' }} onClick={handleClick}>
                     <img className="w-[15px] h-[15px] select-none" src={toggle_icon} alt='erase_button' style={{ transform: rotation, transition: 'transform 0.2s' }} />
                 </div>

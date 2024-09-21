@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 
-import Tag from "./Tag";
+import FormCategoryTag from "./FormCategoryTag";
 import SelectedTag from "./SelectedTag";
 import TagController from "../controller/TagController";
 import AppContext from "../AppContext";
@@ -12,7 +12,6 @@ const FormTagItem = (props) => {
   const [addedNewTag, setAddedNewTag] = useState("");
   const [selectedTags, setSelectTags] = useState([]);
   const dbProm = useContext(AppContext).dbProm;
-
 
   useEffect(() => {
     dbProm.then((db) => {
@@ -72,8 +71,8 @@ const FormTagItem = (props) => {
   };
 
   return (
-    <div className="w-[310px] p-[9px] bg-zinc-100 rounded-[5px] flex-col justify-center items-start flex">
-      <div className="w-[105px] h-5 text-black text-[13px] font-normal font-['Jost'] leading-3">
+    <div className="w-[310px] p-[9px] bg-zinc-100 rounded-[5px] flex-col justify-center items-start gap-[5px] flex">
+      <div className="w-[105px] h-5 text-black text-[13px] font-bold text-neutral-600 font-['Jost'] leading-3">
         {props.label}
       </div>
       <div className="w-full h-[30px] pl-[10px] pr-2.5 py-[5px] bg-zinc-300 rounded-t-[5px] flex justify-between items-center">
@@ -94,7 +93,7 @@ const FormTagItem = (props) => {
           )}
         </div>
         <img
-          className="w-3 h-3 justify-center items-center"
+          className="w-3 h-3 justify-center items-center opacity-[0.7]"
           onClick={handleClearAll}
           src={x_button}
           alt="erase"
@@ -102,7 +101,7 @@ const FormTagItem = (props) => {
       </div>
       <div className="w-full flex flex-wrap p-[10px] bg-white rounded-b-[5px] justify-start items-center gap-2">
         {tags.map((tag, i) => (
-          <Tag key={i} name={tag} onClick={handleTagClick} />
+          <FormCategoryTag key={i} name={tag} onClick={handleTagClick} />
         ))}
         <div className="w-full h-[30px] pl-[10px] pr-2.5 py-[5px] bg-zinc-300 rounded-[5px] justify-end items-center inline-flex">
           <input
@@ -113,7 +112,7 @@ const FormTagItem = (props) => {
             onKeyDown={handleAddNewTag}
           />
           <img
-            className="w-3 h-3 relative flex-col justify-center items-center"
+            className="w-3 h-3 relative flex-col justify-center items-center opacity-[0.7]"
             src={x_button}
             alt="erase"
             onClick={handleClear}

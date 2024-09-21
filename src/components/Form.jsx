@@ -17,7 +17,7 @@ export default function Form(props) {
 
     const onSubmit = (data) => {
         // console.log(data);
-        if(data.tags.length === 0) return;
+        if (data.tags.length === 0) return;
         dbProm.then(async (db) => {
             const linkController = new LinkController(db);
             await linkController.addLink(data)
@@ -44,41 +44,40 @@ export default function Form(props) {
     });
 
     return (
-        <div className="h-auto overflow-y-scroll pb-[18px]">
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='w-[100%] h-[100%] flex-col justify-start items-center inline-flex gap-[18px]'>
-                    <FormItem 
-                        name="url"
-                        label="*URL"
-                        register={register}
-                        rules={{ required: "URL is required" }}
-                        setValue={setValue}
-                    />
-                    <FormItem
-                        name="name"
-                        label="*Name"
-                        register={register}
-                        rules={{ required: "Name is required" }}
-                        setValue={setValue}
-                    />
-                    <FormItem
-                        name="description"
-                        label="Description"
-                        register={register}
-                        setValue={setValue}
-                    />
-                    <FormTagItem
-                        name="tags"
-                        label="*Tags"
-                        register={register}
-                        setValue={setValue}
-                    />
-                    {/* Add Button */}
-                    <div className="w-[100px] px-[17px] py-2 hover:bg-red-400 bg-red-600 rounded-[5px] justify-center items-center gap-2.5 inline-flex">
-                        <input type='submit' className="w-[61px] h-[13px] text-center text-white text-[15px] font-normal font-['Jost'] leading-[14.10px]" value="Add"></input>
-                    </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='flex-col justify-start items-center inline-flex gap-[18px]'>
+                <FormTagItem
+                    name="tags"
+                    label="Category"
+                    register={register}
+                    setValue={setValue}
+                />
+                <FormItem
+                    name="url"
+                    label="Link"
+                    register={register}
+                    rules={{ required: "URL is required" }}
+                    setValue={setValue}
+                />
+                <FormItem
+                    name="name"
+                    label="Name"
+                    register={register}
+                    rules={{ required: "Name is required" }}
+                    setValue={setValue}
+                />
+                <FormItem
+                    name="description"
+                    label="Description (Optional)"
+                    register={register}
+                    setValue={setValue}
+                />
+            </div>
+            <div className='flex justify-center items-center py-[18px]'>
+                <div className="w-[100px] h-[40px] flex hover:bg-red-400 bg-red-600 rounded-[5px] justify-center items-center">
+                    <input type='submit' className="w-[60px] h-[15px] text-center text-white text-[15px] font-normal font-['Jost'] leading-[14.10px]" value="Add"></input>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     );
 }
