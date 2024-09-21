@@ -5,7 +5,7 @@
 
 **[ Buggy ]** is a Chrome extension built for developers who frequently end up searching for the same coding solutions. Inspired by common development workflows like commit and push, Buggy provides an intuitive way to save solutions (such as those from Stack Overflow), allowing developers to easily **Save**, **Organize**, and **Search** these resources for future use without interrupting the developing process.
 
-<div style="display: flex; justify-content: space-between; width: 100%">
+<div style="display: flex; justify-content: space-between; flex-wrap: nowrap; width: 100%">
     <img src="./public/guide/s1.png" alt="slide1" style="width: 33%;">
     <img src="./public/guide/s2.png" alt="slide2" style="width: 33%;">
     <img src="./public/guide/s3.png" alt="slide3" style="width: 33%;">
