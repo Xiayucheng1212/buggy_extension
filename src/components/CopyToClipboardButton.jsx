@@ -9,7 +9,7 @@ const CopyToClipboardButton = (props) => {
 
   const handleClick = () => {
     setCopied(true);
-    console.log("copied");
+    // console.log("copied");
     setTimeout(() => {
       setCopied(false);
     }, 1000);

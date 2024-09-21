@@ -25,8 +25,7 @@ const LinkItem = (props) => {
           // populate links in the tag
           let links = await linkController.getLinks(tag.links);
           tag.links = links;
-        }
-        console.log(newAllTags);
+        };
         props.setTags(newAllTags);
       });
     })

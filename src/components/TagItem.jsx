@@ -14,9 +14,6 @@ const TagItem = (props) => {
     useEffect(() => {
         if (links.length === 0) setToggle(false);
         setLinks(props.links);
-        console.log("TagItem useEffect called.");
-        console.log("new", props.links);
-
     }, [props.links]);
 
     useEffect(() => {

@@ -7,12 +7,10 @@ import FormTagItem from './FormTagItem';
 import AppContext from '../AppContext';
 import LinkController from '../controller/LinkController';
 
-
-export default function Form(props) {
+let Form = (props) => {
 
     const { register, handleSubmit, setValue } = useForm();
     const dbProm = useContext(AppContext).dbProm;
-    const setDraftCount = useContext(AppContext).setDraftCount;
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
@@ -21,17 +19,21 @@ export default function Form(props) {
         dbProm.then(async (db) => {
             const linkController = new LinkController(db);
             await linkController.addLink(data)
-            console.log("added");
+            // console.log("added");
             if (props.handleDeleteDraft !== undefined) {
                 props.handleDeleteDraft(props.draft_id);
             }
-            // update badge count   
-            chrome.action.getBadgeText({}, (badgeText) => {
-                let minus_one = parseInt(badgeText) - 1;
-                let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
-                chrome.action.setBadgeText({ text: minus_one_count });
-                setDraftCount(minus_one_count);
-            });
+            // update badge count
+            if(props.isDraft) {
+                chrome.action.getBadgeText({}, (badgeText) => {
+                    let minus_one = parseInt(badgeText) - 1;
+                    let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
+                    chrome.action.setBadgeText({ text: minus_one_count });
+                    chrome.storage.local.set({ draftCount: minus_one_count }, () => {
+                        console.log("Draft count updated in storage");
+                    });
+                });
+            }
             // jump back to home page
             navigate('/', { replace: true });
         });
@@ -81,3 +83,5 @@ export default function Form(props) {
         </form>
     );
 }
+
+export default Form;

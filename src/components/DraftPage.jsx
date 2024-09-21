@@ -7,14 +7,12 @@ import AppContext from '../AppContext';
 
 const DraftPage = () => {
     const dbProm = useContext(AppContext).dbProm;
-    const setDraftCount = useContext(AppContext).setDraftCount;
     const [drafts, setDrafts] = useState([]);
 
     const handleDelete = (id) => {
         let newDrafts = drafts.filter(draft => draft.id !== id);
         dbProm.then((db) => {
             db.transaction('drafts', 'readwrite').objectStore('drafts').delete(id).then(() => {
-                console.log("deleted");
                 setDrafts(newDrafts);
             });
         });
@@ -23,7 +21,9 @@ const DraftPage = () => {
             let minus_one = parseInt(badgeText) - 1;
             let minus_one_count = minus_one > 0 ? minus_one.toString() : "";
             chrome.action.setBadgeText({ text: minus_one_count });
-            setDraftCount(minus_one_count);
+            chrome.storage.local.set({ draftCount: minus_one_count }, () => {
+                console.log("Draft count updated in storage");
+            });
         });
     }
 
@@ -37,22 +37,21 @@ const DraftPage = () => {
 
     useEffect(() => {
         getDrafts();
-    });
+    }, []);
+    
 
     useEffect(() => {
-        if (!chrome.runtime) return;
-        const AddDraftByShortcutListener = (request, sender, sendResponse) => {
-            console.log(request);
-            if (request.type === "add-draft") {
+        const handleStorageChange = (changes, area) => {
+            if (area === "local" && changes.draftCount) {
                 getDrafts();
-                sendResponse({ status: "received" });
             }
         }
-        chrome.runtime.onMessage.addListener(AddDraftByShortcutListener);
+
+        chrome.storage.onChanged.addListener(handleStorageChange);
         return () => {
-            chrome.runtime.onMessage.removeListener(AddDraftByShortcutListener);
+            chrome.storage.onChanged.removeListener(handleStorageChange);
         }
-    });
+    }, []);
 
     return (
         <div className="h-full self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex overflow-y-scroll">

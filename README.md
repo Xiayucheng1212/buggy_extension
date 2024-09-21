@@ -3,7 +3,13 @@
     <h1 style="padding: 20px"> [ Buggy ] - Save, Organize, and Search Websites !!! </h1>
 </div>
 
-**[ Buggy ]** is a Chrome extension built for developers who frequently end up searching for the same coding solutions. Inspired by common development workflows like commit and push, Buggy provides an intuitive way to save solutions (such as those from Stack Overflow), allowing developers to easily **Save**, **Organize**, and **Search** these resources for future use without interrepting the developing process.
+**[ Buggy ]** is a Chrome extension built for developers who frequently end up searching for the same coding solutions. Inspired by common development workflows like commit and push, Buggy provides an intuitive way to save solutions (such as those from Stack Overflow), allowing developers to easily **Save**, **Organize**, and **Search** these resources for future use without interrupting the developing process.
+
+<div style="display: flex; justify-content: space-between;">
+    <img src="./public/guide/s1.png" alt="slide1" style="width: 30%;">
+    <img src="./public/guide/s2.png" alt="slide2" style="width: 30%;">
+    <img src="./public/guide/s3.png" alt="slide3" style="width: 30%;">
+</div>
 
 ## How To Use 📌
 ### Save the Website 💾

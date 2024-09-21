@@ -20,7 +20,6 @@ const EditPage = (props) => {
     useEffect(() => {
         dbProm.then((db) => {
             draftController.current = new DraftController(db);
-            console.log(id);
             draftController.current.getAll().then((drafts) => {
                 var draft = drafts.find((draft) => draft.id === parseInt(id));
                 setDraft(draft);
@@ -38,7 +37,7 @@ const EditPage = (props) => {
         <>
             <div className="self-stretch bg-white overflow-y-scroll flex-col justify-start items-center gap-[14px] inline-flex">
                 <div className="w-full h-10 flex-col justify-center items-center inline-flex font-bold text-xl text-neutral-600 font-['Jost'] select-none">[ Push Draft ]</div>
-                <Form draft_id={draft.id} url={draft.url} name={draft.name} description={draft.description} handleDeleteDraft={handleDeleteDraft} />
+                <Form draft_id={draft.id} url={draft.url} name={draft.name} description={draft.description} handleDeleteDraft={handleDeleteDraft} isDraft={true} />
             </div>
         </>
     );
