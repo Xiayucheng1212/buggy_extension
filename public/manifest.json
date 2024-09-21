@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Buggy - Memo for developers",
+  "name": "[ Buggy ] - Save and search your bugs",
   "version": "1.0",
   "description": "Description of your extension",
   "action": {

@@ -58,15 +58,17 @@ const HomePage = (props) => {
 	}
 
 	return (
-		<div className="h-full self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
+		<div className="h-full overflow-y-scroll self-stretch bg-white flex-col justify-start items-center gap-1.5 inline-flex">
 			{searching
 				? (searchedLinks.length ? searchedLinks.map((link, i) => (
 					<LinkItem key={i} id={link.id} name={link.name} url={link.url} />
 				)) :
 					<EmptyInformation information={"No results found."} />)
-				: tags.map((tag, i) => (
+				: (tags.length ? tags.map((tag, i) => (
 					<TagItem key={i} id={tag.id} name={tag.name} links={tag.links} setTags={setTags} editTag={editTag} />
-				))}
+				)) :
+					<EmptyInformation information={"[ Empty ]"} />)
+			}
 		</div>
 	);
 };
