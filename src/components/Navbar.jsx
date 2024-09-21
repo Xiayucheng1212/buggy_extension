@@ -12,36 +12,29 @@ import add_logo from '../imgs/add-icon.png';
 import draft_logo from '../imgs/draft.png';
 
 const Navbar = (props) => {
-   const searchBarInput = useContext(AppContext).searchBarInput;
    const setSearchBarInput = useContext(AppContext).setSearchBarInput;
-    const draftCount = useContext(AppContext).draftCount;
-    const setDraftCount = useContext(AppContext).setDraftCount;
+    const [draftCount, setDraftCount] = useState(0);
 
     const handleSearch = (input) => {
         setSearchBarInput(input);
     }
 
     useEffect(() => {
-        if (!chrome.action) return;
-        chrome.action.getBadgeText({}, (badgeText) => {
-            setDraftCount(parseInt(badgeText) || 0);
+        chrome.storage.local.get("draftCount", (data) => {
+            setDraftCount(data.draftCount || 0);
         });
-    });
 
-    useEffect(() => {
-        if(!chrome.runtime) return;
-        const AddDraftByShortcutListener = (request, sender, sendResponse) => {
-            console.log(request);
-            if (request.type === "add-draft") {
-                setDraftCount(draftCount + 1);
-                sendResponse({ status: "received" });
+        const handleStorageChange = (changes, area) => {
+            if (area === "local" && changes.draftCount) {
+                setDraftCount(changes.draftCount.newValue || 0);
             }
         }
-        chrome.runtime.onMessage.addListener(AddDraftByShortcutListener);
+
+        chrome.storage.onChanged.addListener(handleStorageChange);
         return () => {
-            chrome.runtime.onMessage.removeListener(AddDraftByShortcutListener);
+            chrome.storage.onChanged.removeListener(handleStorageChange);
         }
-    });
+    }, []);
 
     return (
         <div className="self-stretch h-10 mb-2 justify-start items-center gap-2 inline-flex">

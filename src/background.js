@@ -35,21 +35,23 @@ chrome.commands.onCommand.addListener((command) => {
     chrome.tabs
       .query({ active: true, lastFocusedWindow: true })
       .then(([tab]) => {
-        console.log(tab);
-        if (!tab) return;
+        if (tab === undefined) return;
         controller.addDraft({
           name: tab.title,
           url: tab.url,
           description: "",
         });
+        // update badge count
+        chrome.action.getBadgeText({}, (badgeText) => {
+          let count = parseInt(badgeText) || 0;
+          let add_one_count = (count + 1).toString();
+          chrome.action.setBadgeText({ text: add_one_count });
+          // Update storage
+          chrome.storage.local.set({ draftCount: add_one_count }, () => {
+            console.log("Draft count updated in storage");
+          });
+        });
       });
-    // update badge count
-    chrome.action.getBadgeText({}, (badgeText) => {
-      let count = parseInt(badgeText) || 0;
-      let add_one_count = (count + 1).toString();
-      chrome.action.setBadgeText({ text: add_one_count });
-      chrome.runtime.sendMessage({ type: command });
-    });
   });
 });
 

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "[ Buggy ] - Save and search your bugs",
+  "name": "[ Buggy ] - Save, Organize and Search",
   "version": "1.0",
-  "description": "Description of your extension",
+  "description": "[ Buggy ] helps you saving useful website without interrepting the developing process.",
   "action": {
     "default_popup": "index.html",
     "default_icon": {
@@ -18,9 +18,7 @@
   },
   "permissions": [
     "storage",
-    "tabs",
-    "activeTab",
-    "notifications"
+    "activeTab"
   ],
   "commands": {
     "add-draft": { 

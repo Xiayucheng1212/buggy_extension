@@ -12,7 +12,6 @@ import DBContext from './AppContext';
 import './App.css';
 
 const App = () => {
-  const [draftCount, setDraftCount] = useState(0);
   const [searchBarInput, setSearchBarInput] = useState("");
   const [isHomePage, setIsHomePage] = useState(true);
   let dbProm = openDB('buggy', 1, {
@@ -52,7 +51,7 @@ const App = () => {
 
   return (
     <div className="w-[350px] h-[500px] p-[20px] bg-white flex-col justify-start items-center gap-1.5 inline-flex">
-      <DBContext.Provider value={{ dbProm: dbProm, draftCount, setDraftCount, searchBarInput, setSearchBarInput }}>
+      <DBContext.Provider value={{ dbProm: dbProm, searchBarInput, setSearchBarInput }}>
         <Navbar isHomePage={isHomePage} />
         <Routes>
           <Route index element={<HomePage />} />

@@ -38,13 +38,9 @@ LinkController.prototype.addLink = function (link) {
     var tagController = new TagController(this.db);
 
     return tagController.getAll().then(async (tags) => {
-        console.log(tags);
-        console.log(link.tags);
         link_tag_ids = link.tags.map((tag) => {
             return tags.find((t) => t.name === tag);
         }).map((tag) => tag.id);
-
-        console.log(link_tag_ids);
 
         var link_id = await this.db.transaction('links', 'readwrite').objectStore('links')
                 .add( {

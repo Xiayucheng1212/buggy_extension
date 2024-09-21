@@ -45,12 +45,11 @@ const HomePage = (props) => {
 	}, [searchedLinks]);
 
 	const editTag = (tagId, tagName) => {
-		console.log(tagId, tagName);
+		// console.log(tagId, tagName);
 		dbProm.then((db) => {
 			const tagController = new TagController(db);
 			tagController.updateTag(tagId, tagName).then(() => {
 				tagController.getAllLinksByTags().then((tags) => {
-					console.log(tags);
 					setTags(tags);
 				});
 			});
